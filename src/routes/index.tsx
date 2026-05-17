@@ -44,7 +44,7 @@ function Stars({ className = "" }: { className?: string }) {
   return (
     <div className={`flex gap-0.5 ${className}`}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className="h-4 w-4 fill-rose-gold text-rose-gold" />
+        <Star key={i} className="h-4 w-4 text-rose-gold" style={{ fill: "currentColor" }} />
       ))}
     </div>
   );
