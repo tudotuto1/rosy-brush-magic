@@ -61,8 +61,12 @@ function Index() {
       {/* B. Header */}
       <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#" className="font-display text-2xl tracking-tight">
-            Lumina<span className="text-rose-gold">Brush</span>
+          <a href="#" className="inline-flex items-center">
+            <img
+              src="/kinetis-logo.png"
+              alt="Kinetis Brush"
+              className="h-10 w-auto"
+            />
           </a>
           <button className="relative p-2 rounded-full hover:bg-secondary transition-colors" aria-label="Panier">
             <ShoppingBag className="h-5 w-5" />
@@ -107,7 +111,7 @@ function Index() {
             <div className="relative">
               <div className="absolute -inset-8 bg-gradient-to-br from-accent/40 via-transparent to-transparent rounded-full blur-3xl" />
               <div className="relative aspect-square rounded-3xl overflow-hidden bg-cream shadow-md">
-                <img src={productHero} alt="LuminaBrush nettoyeur de pinceaux électrique sur une coiffeuse" className="h-full w-full object-cover" />
+                <img src={productHero} alt="Kinetis Brush nettoyeur de pinceaux électrique sur une coiffeuse" className="h-full w-full object-cover" />
               </div>
               <div className="absolute -bottom-4 -left-4 sm:-left-8 bg-background rounded-2xl shadow-lg p-4 flex items-center gap-3 border border-border">
                 <div className="h-10 w-10 rounded-full gradient-rose flex items-center justify-center">
@@ -252,7 +256,7 @@ function Index() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center bg-background rounded-[2rem] p-6 sm:p-10 lg:p-14 shadow-md border border-border">
             <Reveal>
               <div className="aspect-square rounded-3xl overflow-hidden bg-cream">
-                <img src={productMain} alt="LuminaBrush — offre du jour" className="h-full w-full object-cover" />
+                <img src={productMain} alt="Kinetis Brush — offre du jour" className="h-full w-full object-cover" />
               </div>
             </Reveal>
             <Reveal delay={120}>
@@ -261,7 +265,7 @@ function Index() {
                   -50% Aujourd'hui
                 </span>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight">
-                  LuminaBrush <em className="text-rose-gold not-italic">Édition Rose Gold</em>
+                  Kinetis Brush
                 </h2>
                 <div className="flex items-center gap-3">
                   <Stars />
@@ -332,8 +336,12 @@ function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
-              <div className="font-display text-2xl text-background">
-                Lumina<span className="text-rose-gold">Brush</span>
+              <div>
+                <img
+                  src="/kinetis-logo.png"
+                  alt="Kinetis Brush"
+                  className="h-10 w-auto"
+                />
               </div>
               <p className="text-sm mt-2 max-w-xs">La beauté commence par des outils impeccables.</p>
             </div>
@@ -344,7 +352,7 @@ function Index() {
             </nav>
           </div>
           <div className="mt-10 pt-6 border-t border-background/10 text-xs text-background/50 flex flex-col sm:flex-row justify-between gap-3">
-            <span>© {new Date().getFullYear()} LuminaBrush. Tous droits réservés.</span>
+            <span>© {new Date().getFullYear()} Kinetis Brush. Tous droits réservés.</span>
             <span className="inline-flex items-center gap-2"><Lock className="h-3.5 w-3.5" /> Paiement 100% sécurisé</span>
           </div>
         </div>
