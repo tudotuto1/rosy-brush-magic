@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SuccessRouteImport } from './routes/success'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 
+const SuccessRoute = SuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +37,47 @@ const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/checkout' | '/api/stripe/webhook'
+  fullPaths: '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/checkout' | '/api/stripe/webhook'
-  id: '__root__' | '/' | '/api/checkout' | '/api/stripe/webhook'
+  to: '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
+  id: '__root__' | '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SuccessRoute: typeof SuccessRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/success': {
+      id: '/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SuccessRoute: SuccessRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
