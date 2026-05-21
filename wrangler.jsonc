@@ -7,8 +7,14 @@
   "kv_namespaces": [
     {
       "binding": "ORDERS_KV",
-      "id": "TO_BE_FILLED_AFTER_CREATION",
-      "preview_id": "TO_BE_FILLED_AFTER_CREATION"
+      "id": ""kv_namespaces": [{
+                    "binding": "KV_BINDING",
+                    "id": "889908e345a34bc2be028e6584a14f89"
+                 }]",
+      "preview_id": ""kv_namespaces": [{
+                    "binding": "KV_BINDING",
+                    "id": "447524c628234ea5832b12d2291077ce"
+                 }]"
     }
   ]
 }
