@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -73,10 +74,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Kinetis Brush — Nettoyeur de pinceaux électrique premium" },
-      { name: "description", content: "Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Élimine 99% des bactéries. Livraison gratuite & garantie 30 jours." },
+      {
+        name: "description",
+        content:
+          "Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Élimine 99% des bactéries. Livraison gratuite & garantie 30 jours.",
+      },
       { name: "author", content: "Kinetis Brush" },
       { property: "og:title", content: "Kinetis Brush — Pinceaux propres en 30 secondes" },
-      { property: "og:description", content: "Le nettoyeur électrique pour pinceaux de maquillage qui transforme votre routine beauté." },
+      {
+        property: "og:description",
+        content:
+          "Le nettoyeur électrique pour pinceaux de maquillage qui transforme votre routine beauté.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -114,6 +123,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
 }
