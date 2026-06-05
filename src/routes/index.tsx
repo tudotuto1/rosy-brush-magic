@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ShoppingBag,
-  Star,
   ArrowRight,
   Truck,
   ShieldCheck,
@@ -59,16 +58,6 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   );
 }
 
-function Stars({ className = "" }: { className?: string }) {
-  return (
-    <div className={`flex gap-0.5 ${className}`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className="h-4 w-4 text-rose-gold" style={{ fill: "currentColor" }} />
-      ))}
-    </div>
-  );
-}
-
 function Index() {
   const { startCheckout, isLoading, error } = useCheckout();
 
@@ -87,8 +76,7 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       {/* A. Top bar */}
       <div className="gradient-rose text-white text-center text-xs sm:text-sm py-2.5 px-4 font-medium tracking-wide">
-        Livraison gratuite aujourd'hui <span aria-hidden>🚚</span> · Garantie 30 jours satisfait ou
-        remboursé
+        Livraison offerte <span aria-hidden>🚚</span> · Garantie 30 jours satisfait ou remboursé
       </div>
 
       {/* B. Header */}
@@ -102,9 +90,6 @@ function Index() {
             aria-label="Panier"
           >
             <ShoppingBag className="h-5 w-5" />
-            <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-rose-gold text-[10px] text-white flex items-center justify-center font-semibold">
-              1
-            </span>
           </button>
         </div>
       </header>
@@ -115,23 +100,16 @@ function Index() {
           <Reveal>
             <div className="space-y-7">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-xs font-medium text-muted-foreground">
-                <Sparkles className="h-3.5 w-3.5 text-rose-gold" /> Nouveauté beauté virale
+                <Sparkles className="h-3.5 w-3.5 text-rose-gold" /> Nouveauté beauté
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl leading-[1.05] font-medium">
                 Une peau parfaite commence par des{" "}
                 <em className="text-rose-gold not-italic">pinceaux propres.</em>
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground max-w-xl leading-relaxed">
-                Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Éliminez 99%
-                des bactéries causant l'acné.
+                Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Fini le
+                sébum, la poussière et les résidus accumulés au fil des jours.
               </p>
-              <div className="flex items-center gap-3">
-                <Stars />
-                <span className="text-sm text-muted-foreground">
-                  Recommandé par <strong className="text-foreground">+10 000</strong> passionnées de
-                  beauté
-                </span>
-              </div>
               <a
                 href="#buy"
                 className="group inline-flex items-center gap-3 gradient-rose text-white px-7 py-4 rounded-2xl font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all"
@@ -202,7 +180,7 @@ function Index() {
               {
                 icon: Sparkles,
                 title: "La solution",
-                text: "Notre technologie rotative élimine 99% des impuretés en moins de 30 secondes.",
+                text: "Notre technologie rotative élimine les impuretés en profondeur en moins de 30 secondes.",
               },
             ].map((c, i) => (
               <Reveal key={c.title} delay={i * 100}>
@@ -318,54 +296,6 @@ function Index() {
         </div>
       </section>
 
-      {/* G. Testimonials */}
-      <section className="py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-6">
-          <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <p className="text-xs uppercase tracking-[0.2em] text-rose-gold mb-3 font-semibold">
-                Témoignages
-              </p>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium">
-                Elles ont transformé leur routine
-              </h2>
-            </div>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Sophie M.",
-                text: "Incroyable, mes pinceaux sèchent instantanément et je n'ai plus de boutons depuis que je l'utilise. Un must-have.",
-              },
-              {
-                name: "Camille L.",
-                text: "Je détestais nettoyer mes pinceaux à la main. En 30 secondes c'est fait, ils sont comme neufs. Je recommande !",
-              },
-              {
-                name: "Léa B.",
-                text: "Le design est sublime sur ma coiffeuse et le résultat est bluffant. Ma peau me dit merci chaque matin.",
-              },
-            ].map((t, i) => (
-              <Reveal key={t.name} delay={i * 100}>
-                <div className="h-full bg-cream rounded-3xl p-8 border border-border">
-                  <Stars className="mb-4" />
-                  <p className="text-foreground leading-relaxed mb-6">"{t.text}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full gradient-rose flex items-center justify-center text-white font-semibold text-sm">
-                      {t.name[0]}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm">{t.name}</div>
-                      <div className="text-xs text-muted-foreground">Cliente vérifiée</div>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* H. Buy box */}
       <section id="buy" className="bg-cream py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-6">
@@ -381,25 +311,13 @@ function Index() {
             </Reveal>
             <Reveal delay={120}>
               <div className="space-y-6">
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-gold text-white text-xs font-semibold">
-                  -50% Aujourd'hui
-                </span>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight">
                   Kinetis Brush
                 </h2>
-                <div className="flex items-center gap-3">
-                  <Stars />
-                  <span className="text-sm text-muted-foreground">2 187 avis</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-semibold">45,99 $</span>
+                  <span className="text-sm text-muted-foreground">CAD</span>
                 </div>
-                <div className="flex items-baseline gap-3">
-                  <span className="text-4xl font-semibold">29,90€</span>
-                  <span className="text-lg text-muted-foreground line-through">59,90€</span>
-                  <span className="text-sm font-semibold text-rose-gold">Économisez 30€</span>
-                </div>
-                <p className="text-sm text-muted-foreground inline-flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-rose-gold" />
-                  Stock limité — forte demande suite à sa viralité sur TikTok
-                </p>
                 <button
                   type="button"
                   onClick={() => startCheckout("kinetis-brush")}
@@ -407,14 +325,14 @@ function Index() {
                   className="group flex items-center justify-center gap-3 w-full gradient-rose text-white px-7 py-5 rounded-2xl font-semibold text-lg shadow-md hover:shadow-xl hover:scale-[1.01] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   <ShoppingBag className="h-5 w-5" />
-                  {isLoading ? "Redirection…" : "Ajouter au panier — 29,90€"}
+                  {isLoading ? "Redirection…" : "Ajouter au panier — 45,99 $"}
                 </button>
                 <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-2 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">
                     <Lock className="h-3.5 w-3.5" /> Paiement sécurisé
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <CreditCard className="h-3.5 w-3.5" /> Visa · Mastercard · PayPal
+                    <CreditCard className="h-3.5 w-3.5" /> Visa · Mastercard · Apple Pay
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5" /> Garantie 30 jours
@@ -455,7 +373,7 @@ function Index() {
               },
               {
                 q: "Quand vais-je recevoir ma commande ?",
-                a: "Livraison gratuite en 3 à 5 jours ouvrés partout en France métropolitaine, avec suivi du colis par e-mail.",
+                a: "Vos commandes sont préparées et expédiées par nos partenaires fournisseurs. Délai de livraison estimé : 5 à 8 jours ouvrés au Canada, avec suivi du colis par e-mail.",
               },
             ].map((item, i) => (
               <AccordionItem
@@ -472,6 +390,26 @@ function Index() {
               </AccordionItem>
             ))}
           </Accordion>
+        </div>
+      </section>
+
+      {/* I-bis. Transparence & expédition */}
+      <section className="bg-cream py-16">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <Reveal>
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-background text-xs font-medium text-muted-foreground border border-border">
+                <Truck className="h-3.5 w-3.5 text-rose-gold" /> Expédition & transparence
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Kinetis Brush travaille avec des partenaires fournisseurs sélectionnés qui préparent
+                et expédient vos commandes. Délai de livraison estimé :
+                <strong className="text-foreground"> 5 à 8 jours ouvrés</strong> au Canada. Vous
+                recevez un numéro de suivi par e-mail dès l'expédition, et notre garantie 30 jours
+                satisfait ou remboursé s'applique à chaque commande.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
