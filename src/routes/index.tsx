@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ShoppingBag,
@@ -27,7 +27,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useCheckout } from "@/hooks/use-checkout";
+import { useCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
@@ -59,11 +59,8 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 }
 
 function Index() {
-  const { startCheckout, isLoading, error } = useCheckout();
-
-  useEffect(() => {
-    if (error) toast.error(error);
-  }, [error]);
+  const { quantity, addToCart, mounted } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (window.location.search.includes("canceled=true")) {
@@ -71,6 +68,11 @@ function Index() {
       window.history.replaceState({}, "", "/");
     }
   }, []);
+
+  function handleAddToCart() {
+    addToCart(1);
+    navigate({ to: "/panier" });
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -85,12 +87,18 @@ function Index() {
           <a href="#" className="inline-flex items-center">
             <img src="/kinetis-logo.png" alt="Kinetis Brush" className="h-10 w-auto" />
           </a>
-          <button
+          <Link
+            to="/panier"
             className="relative p-2 rounded-full hover:bg-secondary transition-colors"
             aria-label="Panier"
           >
             <ShoppingBag className="h-5 w-5" />
-          </button>
+            {mounted && quantity > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-rose-gold text-[10px] text-white flex items-center justify-center font-semibold">
+                {quantity}
+              </span>
+            )}
+          </Link>
         </div>
       </header>
 
@@ -320,12 +328,11 @@ function Index() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => startCheckout("kinetis-brush")}
-                  disabled={isLoading}
-                  className="group flex items-center justify-center gap-3 w-full gradient-rose text-white px-7 py-5 rounded-2xl font-semibold text-lg shadow-md hover:shadow-xl hover:scale-[1.01] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  onClick={handleAddToCart}
+                  className="group flex items-center justify-center gap-3 w-full gradient-rose text-white px-7 py-5 rounded-2xl font-semibold text-lg shadow-md hover:shadow-xl hover:scale-[1.01] transition-all"
                 >
                   <ShoppingBag className="h-5 w-5" />
-                  {isLoading ? "Redirection…" : "Ajouter au panier — 45,99 $"}
+                  Ajouter au panier — 45,99 $
                 </button>
                 <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-2 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">

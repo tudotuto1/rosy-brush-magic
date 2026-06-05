@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import type { AppEnv } from "@/lib/env";
 import { getOrderBySessionId, type Order } from "@/lib/orders";
 import { getStripeClient } from "@/lib/stripe";
+import { useCart } from "@/hooks/use-cart";
 
 // Placeholder posé par la PR #1 tant que la vraie clé n'est pas injectée.
 const STRIPE_KEY_PLACEHOLDER = "sk_test_PLACEHOLDER_REPLACE_ME";
@@ -98,6 +99,12 @@ const RETRY_DELAY_MS = 3000;
 
 function SuccessPage() {
   const data = Route.useLoaderData();
+  const { clearCart } = useCart();
+  useEffect(() => {
+    clearCart();
+    // Vidage panier au mount uniquement ; clearCart change d'identité à chaque render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   if (data.status === "paid") {
     return <PaidView data={data} />;
   }

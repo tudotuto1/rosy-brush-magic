@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as PanierRouteImport } from './routes/panier'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
@@ -17,6 +18,11 @@ import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhoo
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
   path: '/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanierRoute = PanierRouteImport.update({
+  id: '/panier',
+  path: '/panier',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -50,20 +58,33 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
+  fullPaths:
+    | '/'
+    | '/panier'
+    | '/success'
+    | '/api/checkout'
+    | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
-  id: '__root__' | '/' | '/success' | '/api/checkout' | '/api/stripe/webhook'
+  to: '/' | '/panier' | '/success' | '/api/checkout' | '/api/stripe/webhook'
+  id:
+    | '__root__'
+    | '/'
+    | '/panier'
+    | '/success'
+    | '/api/checkout'
+    | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PanierRoute: typeof PanierRoute
   SuccessRoute: typeof SuccessRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -76,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/success'
       fullPath: '/success'
       preLoaderRoute: typeof SuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panier': {
+      id: '/panier'
+      path: '/panier'
+      fullPath: '/panier'
+      preLoaderRoute: typeof PanierRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,6 +132,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PanierRoute: PanierRoute,
   SuccessRoute: SuccessRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
