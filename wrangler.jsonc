@@ -13,5 +13,13 @@
       "id": "889908e345a34bc2be028e6584a14f89",
       "preview_id": "447524c628234ea5832b12d2291077ce"
     }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "kinetis-db",
+      "database_id": "5a5eb22b-f014-4ea5-af91-f3210cd1ae53",
+      "migrations_dir": "migrations"
+    }
   ]
 }
