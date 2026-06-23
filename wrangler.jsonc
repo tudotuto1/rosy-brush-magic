@@ -5,7 +5,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
   "vars": {
-    "PUBLIC_APP_URL": "https://rosy-brush-magic.commercial-vitriweb.workers.dev"
+    "PUBLIC_APP_URL": "https://kinetisbrush.com"
   },
   "kv_namespaces": [
     {
