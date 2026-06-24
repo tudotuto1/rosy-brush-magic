@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { env } from "cloudflare:workers";
 import Stripe from "stripe";
+import { getDb } from "@/db";
+import { orders } from "@/db/schema";
 import type { AppEnv } from "@/lib/env";
 import { getOrderBySessionId, saveOrder, type Order } from "@/lib/orders";
 import { getStripeClient } from "@/lib/stripe";
@@ -48,6 +50,27 @@ async function handleCheckoutSessionCompleted(
   };
   await saveOrder(appEnv.ORDERS_KV, order);
   console.log("[Webhook] Order saved", order.id);
+
+  // Dual-write transitoire vers D1 (source de vérité pour /compte).
+  // ON CONFLICT DO NOTHING sur stripe_session_id → idempotent côté D1
+  // (et côté KV via le check ci-dessus).
+  const now = new Date().toISOString();
+  await getDb()
+    .insert(orders)
+    .values({
+      id: order.id,
+      stripeSessionId: sessionId,
+      email: customerEmail ?? "",
+      amountTotal: amountCents,
+      currency,
+      productId,
+      quantity,
+      status: "paid",
+      createdAt: now,
+      updatedAt: now,
+    })
+    .onConflictDoNothing({ target: orders.stripeSessionId });
+  console.log("[Webhook] Order persisted to D1", order.id);
 }
 
 async function handleWebhook(request: Request): Promise<Response> {
