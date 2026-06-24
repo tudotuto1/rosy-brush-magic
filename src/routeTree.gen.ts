@@ -20,6 +20,7 @@ import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiReviewsPhotoSplatRouteImport } from './routes/api/reviews/photo/$'
 
 const SuccessRoute = SuccessRouteImport.update({
   id: '/success',
@@ -76,6 +77,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiReviewsPhotoSplatRoute = ApiReviewsPhotoSplatRouteImport.update({
+  id: '/photo/$',
+  path: '/photo/$',
+  getParentRoute: () => ApiReviewsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -86,9 +92,10 @@ export interface FileRoutesByFullPath {
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
-  '/api/reviews': typeof ApiReviewsRoute
+  '/api/reviews': typeof ApiReviewsRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/api/reviews/photo/$': typeof ApiReviewsPhotoSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -99,9 +106,10 @@ export interface FileRoutesByTo {
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
-  '/api/reviews': typeof ApiReviewsRoute
+  '/api/reviews': typeof ApiReviewsRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/api/reviews/photo/$': typeof ApiReviewsPhotoSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -113,9 +121,10 @@ export interface FileRoutesById {
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
-  '/api/reviews': typeof ApiReviewsRoute
+  '/api/reviews': typeof ApiReviewsRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
+  '/api/reviews/photo/$': typeof ApiReviewsPhotoSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
+    | '/api/reviews/photo/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
+    | '/api/reviews/photo/$'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
+    | '/api/reviews/photo/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -168,7 +180,7 @@ export interface RootRouteChildren {
   PanierRoute: typeof PanierRoute
   SuccessRoute: typeof SuccessRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
-  ApiReviewsRoute: typeof ApiReviewsRoute
+  ApiReviewsRoute: typeof ApiReviewsRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
@@ -252,8 +264,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/reviews/photo/$': {
+      id: '/api/reviews/photo/$'
+      path: '/photo/$'
+      fullPath: '/api/reviews/photo/$'
+      preLoaderRoute: typeof ApiReviewsPhotoSplatRouteImport
+      parentRoute: typeof ApiReviewsRoute
+    }
   }
 }
+
+interface ApiReviewsRouteChildren {
+  ApiReviewsPhotoSplatRoute: typeof ApiReviewsPhotoSplatRoute
+}
+
+const ApiReviewsRouteChildren: ApiReviewsRouteChildren = {
+  ApiReviewsPhotoSplatRoute: ApiReviewsPhotoSplatRoute,
+}
+
+const ApiReviewsRouteWithChildren = ApiReviewsRoute._addFileChildren(
+  ApiReviewsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -264,7 +295,7 @@ const rootRouteChildren: RootRouteChildren = {
   PanierRoute: PanierRoute,
   SuccessRoute: SuccessRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
-  ApiReviewsRoute: ApiReviewsRoute,
+  ApiReviewsRoute: ApiReviewsRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
