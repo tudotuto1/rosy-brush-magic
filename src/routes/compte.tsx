@@ -1,5 +1,5 @@
 import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, LogOut, Package, Truck } from "lucide-react";
+import { ArrowLeft, LogOut, Package, Star, Truck } from "lucide-react";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { getSession } from "@/lib/auth-server";
@@ -93,6 +93,26 @@ function ComptePage() {
             </div>
           )}
         </section>
+
+        <div className="bg-background rounded-3xl border border-border p-6 sm:p-8 flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-2xl bg-accent/40 flex items-center justify-center">
+              <Star className="h-5 w-5 text-rose-gold" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-lg">Laisser un avis</h2>
+              <p className="text-sm text-muted-foreground">
+                Partage ton expérience avec Kinetis Brush.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/avis"
+            className="inline-flex items-center gap-2 gradient-rose text-white px-5 py-2.5 rounded-2xl text-sm font-medium shadow-md hover:shadow-xl transition-all"
+          >
+            Écrire un avis
+          </Link>
+        </div>
 
         <div className="bg-background rounded-3xl border border-border p-6 sm:p-8 flex items-center justify-between gap-4">
           <div>
