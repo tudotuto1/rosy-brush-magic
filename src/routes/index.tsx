@@ -17,6 +17,7 @@ import {
   Lock,
   ChevronDown,
   CreditCard,
+  User,
 } from "lucide-react";
 import productHero from "@/assets/product-hero.jpeg";
 import productMain from "@/assets/product-main.jpeg";
@@ -87,18 +88,27 @@ function Index() {
           <a href="#" className="inline-flex items-center">
             <img src="/kinetis-logo.png" alt="Kinetis Brush" className="h-10 w-auto" />
           </a>
-          <Link
-            to="/panier"
-            className="relative p-2 rounded-full hover:bg-secondary transition-colors"
-            aria-label="Panier"
-          >
-            <ShoppingBag className="h-5 w-5" />
-            {mounted && quantity > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-rose-gold text-[10px] text-white flex items-center justify-center font-semibold">
-                {quantity}
-              </span>
-            )}
-          </Link>
+          <div className="flex items-center gap-1">
+            <Link
+              to="/compte"
+              className="relative p-2 rounded-full hover:bg-secondary transition-colors"
+              aria-label="Mon compte"
+            >
+              <User className="h-5 w-5" />
+            </Link>
+            <Link
+              to="/panier"
+              className="relative p-2 rounded-full hover:bg-secondary transition-colors"
+              aria-label="Panier"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              {mounted && quantity > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-rose-gold text-[10px] text-white flex items-center justify-center font-semibold">
+                  {quantity}
+                </span>
+              )}
+            </Link>
+          </div>
         </div>
       </header>
 
