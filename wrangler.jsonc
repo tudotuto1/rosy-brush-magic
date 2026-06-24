@@ -21,5 +21,6 @@
       "database_id": "5a5eb22b-f014-4ea5-af91-f3210cd1ae53",
       "migrations_dir": "migrations"
     }
-  ]
+  ],
+  "r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "kinetis-reviews" }]
 }

@@ -30,3 +30,29 @@ export const orders = sqliteTable("orders", {
 
 export type Order = typeof orders.$inferSelect;
 export type NewOrder = typeof orders.$inferInsert;
+
+/**
+ * Table `reviews` — avis clients.
+ * Distincte des tables Better Auth et de `orders`.
+ *
+ * `photo_keys` contient un JSON array de clés R2 (bucket `kinetis-reviews`).
+ * `status` permet la modération (pending / approved / rejected) avant publication.
+ */
+export const reviews = sqliteTable("reviews", {
+  id: text("id").primaryKey(),
+  productId: text("product_id").notNull().default("kinetis-brush"),
+  email: text("email").notNull(),
+  rating: integer("rating").notNull(),
+  comment: text("comment"),
+  photoKeys: text("photo_keys").notNull().default("[]"),
+  status: text("status").notNull().default("pending"),
+  createdAt: text("created_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
+export type Review = typeof reviews.$inferSelect;
+export type NewReview = typeof reviews.$inferInsert;
