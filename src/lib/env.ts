@@ -6,4 +6,5 @@ export type AppEnv = {
   DB: D1Database;
   BETTER_AUTH_SECRET: string;
   RESEND_API_KEY: string;
+  ADMIN_EMAIL: string;
 };
