@@ -16,8 +16,8 @@ import type { AppEnv } from "@/lib/env";
 async function getAdminEmailOrNull(): Promise<string | null> {
   const headers = new Headers(getRequestHeaders() as Record<string, string>);
   const session = await createAuth().api.getSession({ headers });
-  const admin = (env as unknown as AppEnv).ADMIN_EMAIL?.toLowerCase();
-  const userEmail = session?.user?.email?.toLowerCase();
+  const admin = (env as unknown as AppEnv).ADMIN_EMAIL?.trim().toLowerCase();
+  const userEmail = session?.user?.email?.trim().toLowerCase();
   return userEmail && admin && userEmail === admin ? userEmail : null;
 }
 
