@@ -13,8 +13,10 @@ import { Route as SuccessRouteImport } from './routes/success'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ConnexionRouteImport } from './routes/connexion'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as AvisRouteImport } from './routes/avis'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
@@ -39,6 +41,11 @@ const CompteRoute = CompteRouteImport.update({
   path: '/compte',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvisRoute = AvisRouteImport.update({
+  id: '/avis',
+  path: '/avis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -47,6 +54,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiReviewsRoute = ApiReviewsRouteImport.update({
+  id: '/api/reviews',
+  path: '/api/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCheckoutRoute = ApiCheckoutRouteImport.update({
@@ -68,22 +80,26 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/avis': typeof AvisRoute
   '/compte': typeof CompteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
+  '/api/reviews': typeof ApiReviewsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/avis': typeof AvisRoute
   '/compte': typeof CompteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
+  '/api/reviews': typeof ApiReviewsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
@@ -91,11 +107,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/avis': typeof AvisRoute
   '/compte': typeof CompteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
+  '/api/reviews': typeof ApiReviewsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
@@ -104,33 +122,39 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/avis'
     | '/compte'
     | '/connexion'
     | '/panier'
     | '/success'
     | '/api/checkout'
+    | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/avis'
     | '/compte'
     | '/connexion'
     | '/panier'
     | '/success'
     | '/api/checkout'
+    | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/avis'
     | '/compte'
     | '/connexion'
     | '/panier'
     | '/success'
     | '/api/checkout'
+    | '/api/reviews'
     | '/api/auth/$'
     | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
@@ -138,11 +162,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  AvisRoute: typeof AvisRoute
   CompteRoute: typeof CompteRoute
   ConnexionRoute: typeof ConnexionRoute
   PanierRoute: typeof PanierRoute
   SuccessRoute: typeof SuccessRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
+  ApiReviewsRoute: typeof ApiReviewsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
@@ -177,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/avis': {
+      id: '/avis'
+      path: '/avis'
+      fullPath: '/avis'
+      preLoaderRoute: typeof AvisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -189,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/reviews': {
+      id: '/api/reviews'
+      path: '/api/reviews'
+      fullPath: '/api/reviews'
+      preLoaderRoute: typeof ApiReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/checkout': {
@@ -218,11 +258,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  AvisRoute: AvisRoute,
   CompteRoute: CompteRoute,
   ConnexionRoute: ConnexionRoute,
   PanierRoute: PanierRoute,
   SuccessRoute: SuccessRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
+  ApiReviewsRoute: ApiReviewsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
