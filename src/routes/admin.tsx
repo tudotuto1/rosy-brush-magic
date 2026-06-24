@@ -77,23 +77,25 @@ function AdminOrderCard({ order }: { order: Order }) {
   const [carrier, setCarrier] = useState(order.carrier ?? "");
   const [trackingNumber, setTrackingNumber] = useState(order.trackingNumber ?? "");
   const [trackingStatus, setTrackingStatus] = useState(order.trackingStatus ?? "");
+  const [notify, setNotify] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [feedback, setFeedback] = useState<"idle" | "saved" | "error">("idle");
+  const [feedback, setFeedback] = useState<"idle" | "saved" | "saved-email" | "error">("idle");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSaving(true);
     setFeedback("idle");
     try {
-      await updateOrderTracking({
+      const result = await updateOrderTracking({
         data: {
           orderId: order.id,
           carrier,
           trackingNumber,
           trackingStatus,
+          notify,
         },
       });
-      setFeedback("saved");
+      setFeedback(result.emailSent ? "saved-email" : "saved");
       await router.invalidate();
     } catch (error) {
       console.error("[admin] updateOrderTracking failed:", error);
@@ -165,9 +167,22 @@ function AdminOrderCard({ order }: { order: Order }) {
           />
         </label>
 
-        <div className="sm:col-span-3 flex items-center justify-between gap-3 pt-1">
+        <div className="sm:col-span-3 flex flex-wrap items-center justify-between gap-3 pt-1">
+          <label className="inline-flex items-center gap-2 text-sm text-muted-foreground cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={notify}
+              onChange={(e) => setNotify(e.target.checked)}
+              disabled={saving}
+              className="h-4 w-4 accent-rose-gold"
+            />
+            Notifier le client par email
+          </label>
           <div className="text-sm">
             {feedback === "saved" && <span className="text-rose-gold">Suivi enregistré ✅</span>}
+            {feedback === "saved-email" && (
+              <span className="text-rose-gold">Suivi enregistré ✅ — email envoyé</span>
+            )}
             {feedback === "error" && <span className="text-rose-gold">Échec — réessaie.</span>}
           </div>
           <button

@@ -16,7 +16,6 @@ import { Route as CompteRouteImport } from './routes/compte'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
-import { Route as ApiAdminCheckRouteImport } from './routes/api/admin-check'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -55,11 +54,6 @@ const ApiCheckoutRoute = ApiCheckoutRouteImport.update({
   path: '/api/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminCheckRoute = ApiAdminCheckRouteImport.update({
-  id: '/api/admin-check',
-  path: '/api/admin-check',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe/webhook',
   path: '/api/stripe/webhook',
@@ -78,7 +72,6 @@ export interface FileRoutesByFullPath {
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
-  '/api/admin-check': typeof ApiAdminCheckRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -90,7 +83,6 @@ export interface FileRoutesByTo {
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
-  '/api/admin-check': typeof ApiAdminCheckRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -103,7 +95,6 @@ export interface FileRoutesById {
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
   '/success': typeof SuccessRoute
-  '/api/admin-check': typeof ApiAdminCheckRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
@@ -117,7 +108,6 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/panier'
     | '/success'
-    | '/api/admin-check'
     | '/api/checkout'
     | '/api/auth/$'
     | '/api/stripe/webhook'
@@ -129,7 +119,6 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/panier'
     | '/success'
-    | '/api/admin-check'
     | '/api/checkout'
     | '/api/auth/$'
     | '/api/stripe/webhook'
@@ -141,7 +130,6 @@ export interface FileRouteTypes {
     | '/connexion'
     | '/panier'
     | '/success'
-    | '/api/admin-check'
     | '/api/checkout'
     | '/api/auth/$'
     | '/api/stripe/webhook'
@@ -154,7 +142,6 @@ export interface RootRouteChildren {
   ConnexionRoute: typeof ConnexionRoute
   PanierRoute: typeof PanierRoute
   SuccessRoute: typeof SuccessRoute
-  ApiAdminCheckRoute: typeof ApiAdminCheckRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -211,13 +198,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/admin-check': {
-      id: '/api/admin-check'
-      path: '/api/admin-check'
-      fullPath: '/api/admin-check'
-      preLoaderRoute: typeof ApiAdminCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/stripe/webhook': {
       id: '/api/stripe/webhook'
       path: '/api/stripe/webhook'
@@ -242,7 +222,6 @@ const rootRouteChildren: RootRouteChildren = {
   ConnexionRoute: ConnexionRoute,
   PanierRoute: PanierRoute,
   SuccessRoute: SuccessRoute,
-  ApiAdminCheckRoute: ApiAdminCheckRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
