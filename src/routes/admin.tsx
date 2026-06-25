@@ -1,8 +1,14 @@
 import { createFileRoute, Link, redirect, useRouter } from "@tanstack/react-router";
-import { ArrowLeft, Loader2, Package } from "lucide-react";
+import { ArrowLeft, Check, Loader2, Package, Star, X } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import type { Order } from "@/db/schema";
-import { getAdminSession, getAllOrders, updateOrderTracking } from "@/lib/admin-server";
+import {
+  getAdminSession,
+  getAllOrders,
+  getPendingReviews,
+  moderateReview,
+  updateOrderTracking,
+} from "@/lib/admin-server";
 
 export const Route = createFileRoute("/admin")({
   beforeLoad: async () => {
@@ -12,9 +18,21 @@ export const Route = createFileRoute("/admin")({
     }
     return { admin };
   },
-  loader: async () => ({ orders: await getAllOrders() }),
+  loader: async () => ({
+    orders: await getAllOrders(),
+    pendingReviews: await getPendingReviews(),
+  }),
   component: AdminPage,
 });
+
+type PendingReview = {
+  id: string;
+  rating: number;
+  comment: string | null;
+  photoKeys: string[];
+  email: string;
+  createdAt: string;
+};
 
 const dateFormatter = new Intl.DateTimeFormat("fr-CA", {
   year: "numeric",
@@ -30,7 +48,7 @@ function formatAmount(cents: number, currency: string): string {
 }
 
 function AdminPage() {
-  const { orders } = Route.useLoaderData();
+  const { orders, pendingReviews } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
@@ -48,27 +66,162 @@ function AdminPage() {
         </div>
       </header>
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-12 lg:py-16 space-y-8">
-        <div className="space-y-2">
-          <h1 className="font-display text-3xl sm:text-4xl text-foreground">Admin — Commandes</h1>
-          <p className="text-muted-foreground">
-            {orders.length} commande{orders.length > 1 ? "s" : ""} au total.
-          </p>
-        </div>
+      <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-12 lg:py-16 space-y-10">
+        <section className="space-y-4">
+          <div className="space-y-1">
+            <h2 className="font-display text-2xl sm:text-3xl text-foreground">
+              Avis en attente de modération
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {pendingReviews.length} avis en attente.
+            </p>
+          </div>
 
-        {orders.length === 0 ? (
-          <div className="bg-background rounded-3xl border border-border p-8 text-sm text-muted-foreground">
-            Aucune commande pour l'instant.
+          {pendingReviews.length === 0 ? (
+            <div className="bg-background rounded-3xl border border-border p-8 text-sm text-muted-foreground">
+              Aucun avis en attente.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {(pendingReviews as PendingReview[]).map((review) => (
+                <AdminReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="space-y-4">
+          <div className="space-y-1">
+            <h1 className="font-display text-3xl sm:text-4xl text-foreground">Admin — Commandes</h1>
+            <p className="text-muted-foreground">
+              {orders.length} commande{orders.length > 1 ? "s" : ""} au total.
+            </p>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {(orders as Order[]).map((order) => (
-              <AdminOrderCard key={order.id} order={order} />
-            ))}
-          </div>
-        )}
+
+          {orders.length === 0 ? (
+            <div className="bg-background rounded-3xl border border-border p-8 text-sm text-muted-foreground">
+              Aucune commande pour l'instant.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {(orders as Order[]).map((order) => (
+                <AdminOrderCard key={order.id} order={order} />
+              ))}
+            </div>
+          )}
+        </section>
       </main>
     </div>
+  );
+}
+
+function StarsRow({ rating }: { rating: number }) {
+  return (
+    <div className="inline-flex items-center gap-0.5" aria-label={`${rating} sur 5`}>
+      {[1, 2, 3, 4, 5].map((n) => {
+        const active = n <= rating;
+        return (
+          <Star
+            key={n}
+            className={`h-4 w-4 ${active ? "text-rose-gold" : "text-muted-foreground/30"}`}
+            style={active ? { fill: "currentColor" } : undefined}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function AdminReviewCard({ review }: { review: PendingReview }) {
+  const router = useRouter();
+  const [pending, setPending] = useState<"approve" | "reject" | null>(null);
+  const [error, setError] = useState(false);
+
+  async function moderate(action: "approve" | "reject") {
+    if (pending) return;
+    setPending(action);
+    setError(false);
+    try {
+      await moderateReview({ data: { reviewId: review.id, action } });
+      await router.invalidate();
+    } catch (err) {
+      console.error("[admin] moderateReview failed:", err);
+      setError(true);
+      setPending(null);
+    }
+  }
+
+  const dateLabel = dateFormatter.format(new Date(review.createdAt));
+
+  return (
+    <article className="bg-background rounded-3xl border border-border p-6 sm:p-7 space-y-4">
+      <header className="flex items-start justify-between gap-4 flex-wrap">
+        <div className="space-y-1">
+          <StarsRow rating={review.rating} />
+          <div className="text-xs text-muted-foreground">
+            <span className="font-mono">{review.email}</span> · {dateLabel} ·{" "}
+            <span className="font-mono">#{review.id.slice(0, 8)}</span>
+          </div>
+        </div>
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+          En attente
+        </span>
+      </header>
+
+      {review.comment && <p className="text-foreground leading-relaxed">"{review.comment}"</p>}
+
+      {review.photoKeys.length > 0 && (
+        <div className="grid grid-cols-3 gap-2">
+          {review.photoKeys.slice(0, 3).map((key) => (
+            <div
+              key={key}
+              className="aspect-square rounded-2xl overflow-hidden bg-cream border border-border"
+            >
+              <img
+                src={`/api/reviews/photo/${key}`}
+                alt="Photo d'avis client"
+                loading="lazy"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div className="text-sm">
+          {error && <span className="text-rose-gold">Échec — réessaie.</span>}
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => moderate("reject")}
+            disabled={pending !== null}
+            className="inline-flex items-center gap-2 rounded-2xl border border-border px-4 py-2 text-sm font-medium hover:bg-cream transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {pending === "reject" ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <X className="h-4 w-4" />
+            )}
+            Rejeter
+          </button>
+          <button
+            type="button"
+            onClick={() => moderate("approve")}
+            disabled={pending !== null}
+            className="inline-flex items-center gap-2 gradient-rose text-white px-5 py-2 rounded-2xl text-sm font-medium shadow-md hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {pending === "approve" ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Check className="h-4 w-4" />
+            )}
+            Approuver
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
 
