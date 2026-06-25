@@ -30,8 +30,13 @@ import {
 } from "@/components/ui/accordion";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
+import { ReviewsSection } from "@/components/reviews-section";
+import { getApprovedReviews } from "@/lib/reviews-server";
 
 export const Route = createFileRoute("/")({
+  loader: async () => ({
+    reviews: await getApprovedReviews({ data: { productId: "kinetis-brush" } }),
+  }),
   component: Index,
 });
 
@@ -62,6 +67,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 function Index() {
   const { quantity, addToCart, mounted } = useCart();
   const navigate = useNavigate();
+  const { reviews } = Route.useLoaderData();
 
   useEffect(() => {
     if (window.location.search.includes("canceled=true")) {
@@ -409,6 +415,8 @@ function Index() {
           </Accordion>
         </div>
       </section>
+
+      <ReviewsSection reviews={reviews} />
 
       {/* I-bis. Transparence & expédition */}
       <section className="bg-cream py-16">
