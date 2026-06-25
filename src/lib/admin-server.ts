@@ -3,7 +3,7 @@ import { getRequestHeaders } from "@tanstack/react-start/server";
 import { desc, eq } from "drizzle-orm";
 import { env } from "cloudflare:workers";
 import { getDb } from "@/db";
-import { orders } from "@/db/schema";
+import { orders, reviews } from "@/db/schema";
 import { createAuth } from "@/lib/auth";
 import { sendEmail } from "@/lib/email";
 import type { AppEnv } from "@/lib/env";
@@ -31,6 +31,58 @@ export const getAllOrders = createServerFn({ method: "GET" }).handler(async () =
   if (!(await getAdminEmailOrNull())) throw new Error("UNAUTHORIZED");
   return await getDb().select().from(orders).orderBy(desc(orders.createdAt));
 });
+
+export const getPendingReviews = createServerFn({ method: "GET" }).handler(async () => {
+  if (!(await getAdminEmailOrNull())) throw new Error("UNAUTHORIZED");
+  const rows = await getDb()
+    .select()
+    .from(reviews)
+    .where(eq(reviews.status, "pending"))
+    .orderBy(desc(reviews.createdAt));
+  return rows.map((r) => ({
+    id: r.id,
+    rating: r.rating,
+    comment: r.comment,
+    photoKeys: JSON.parse(r.photoKeys) as string[],
+    email: r.email,
+    createdAt: r.createdAt,
+  }));
+});
+
+export const moderateReview = createServerFn({ method: "POST" })
+  .inputValidator((d: { reviewId: string; action: "approve" | "reject" }) => {
+    if (!d.reviewId) throw new Error("reviewId requis");
+    if (d.action !== "approve" && d.action !== "reject") throw new Error("action invalide");
+    return d;
+  })
+  .handler(async ({ data }) => {
+    if (!(await getAdminEmailOrNull())) throw new Error("UNAUTHORIZED");
+    const db = getDb();
+
+    // En reject : on supprime les photos R2 pour ne pas laisser orphelines.
+    if (data.action === "reject") {
+      const rows = await db.select().from(reviews).where(eq(reviews.id, data.reviewId)).limit(1);
+      const keys = rows[0] ? (JSON.parse(rows[0].photoKeys) as string[]) : [];
+      for (const key of keys) {
+        try {
+          await (env as unknown as AppEnv).PHOTOS.delete(key);
+        } catch (error) {
+          // Best effort — un échec de delete R2 ne doit pas bloquer la modération.
+          console.error("[admin] PHOTOS.delete failed for", key, error);
+        }
+      }
+    }
+
+    await db
+      .update(reviews)
+      .set({
+        status: data.action === "approve" ? "approved" : "rejected",
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(reviews.id, data.reviewId));
+
+    return { ok: true };
+  });
 
 function escapeHtml(value: string): string {
   return value
