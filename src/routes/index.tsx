@@ -451,11 +451,21 @@ function Index() {
               </p>
             </div>
             <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-              {["Contact", "Politique de confidentialité", "CGV", "Retours"].map((l) => (
-                <a key={l} href="#" className="hover:text-background transition-colors">
-                  {l}
-                </a>
-              ))}
+              <a
+                href="mailto:kinetisbrush@gmail.com"
+                className="hover:text-background transition-colors"
+              >
+                Contact
+              </a>
+              <Link to="/confidentialite" className="hover:text-background transition-colors">
+                Politique de confidentialité
+              </Link>
+              <Link to="/cgv" className="hover:text-background transition-colors">
+                CGV
+              </Link>
+              <Link to="/retours" className="hover:text-background transition-colors">
+                Retours
+              </Link>
             </nav>
           </div>
           <div className="mt-10 pt-6 border-t border-background/10 text-xs text-background/50 flex flex-col sm:flex-row justify-between gap-3">
