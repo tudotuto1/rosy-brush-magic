@@ -10,9 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SuccessRouteImport } from './routes/success'
+import { Route as RetoursRouteImport } from './routes/retours'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ConnexionRouteImport } from './routes/connexion'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as AvisRouteImport } from './routes/avis'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -27,6 +30,11 @@ const SuccessRoute = SuccessRouteImport.update({
   path: '/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RetoursRoute = RetoursRouteImport.update({
+  id: '/retours',
+  path: '/retours',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PanierRoute = PanierRouteImport.update({
   id: '/panier',
   path: '/panier',
@@ -37,9 +45,19 @@ const ConnexionRoute = ConnexionRouteImport.update({
   path: '/connexion',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CgvRoute = CgvRouteImport.update({
+  id: '/cgv',
+  path: '/cgv',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvisRoute = AvisRouteImport.update({
@@ -87,9 +105,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/avis': typeof AvisRoute
+  '/cgv': typeof CgvRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
+  '/retours': typeof RetoursRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/reviews': typeof ApiReviewsRouteWithChildren
@@ -101,9 +122,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/avis': typeof AvisRoute
+  '/cgv': typeof CgvRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
+  '/retours': typeof RetoursRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/reviews': typeof ApiReviewsRouteWithChildren
@@ -116,9 +140,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/avis': typeof AvisRoute
+  '/cgv': typeof CgvRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/connexion': typeof ConnexionRoute
   '/panier': typeof PanierRoute
+  '/retours': typeof RetoursRoute
   '/success': typeof SuccessRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/reviews': typeof ApiReviewsRouteWithChildren
@@ -132,9 +159,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/avis'
+    | '/cgv'
     | '/compte'
+    | '/confidentialite'
     | '/connexion'
     | '/panier'
+    | '/retours'
     | '/success'
     | '/api/checkout'
     | '/api/reviews'
@@ -146,9 +176,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/avis'
+    | '/cgv'
     | '/compte'
+    | '/confidentialite'
     | '/connexion'
     | '/panier'
+    | '/retours'
     | '/success'
     | '/api/checkout'
     | '/api/reviews'
@@ -160,9 +193,12 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/avis'
+    | '/cgv'
     | '/compte'
+    | '/confidentialite'
     | '/connexion'
     | '/panier'
+    | '/retours'
     | '/success'
     | '/api/checkout'
     | '/api/reviews'
@@ -175,9 +211,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   AvisRoute: typeof AvisRoute
+  CgvRoute: typeof CgvRoute
   CompteRoute: typeof CompteRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   ConnexionRoute: typeof ConnexionRoute
   PanierRoute: typeof PanierRoute
+  RetoursRoute: typeof RetoursRoute
   SuccessRoute: typeof SuccessRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiReviewsRoute: typeof ApiReviewsRouteWithChildren
@@ -194,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/retours': {
+      id: '/retours'
+      path: '/retours'
+      fullPath: '/retours'
+      preLoaderRoute: typeof RetoursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/panier': {
       id: '/panier'
       path: '/panier'
@@ -208,11 +254,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConnexionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compte': {
       id: '/compte'
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cgv': {
+      id: '/cgv'
+      path: '/cgv'
+      fullPath: '/cgv'
+      preLoaderRoute: typeof CgvRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/avis': {
@@ -290,9 +350,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AvisRoute: AvisRoute,
+  CgvRoute: CgvRoute,
   CompteRoute: CompteRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   ConnexionRoute: ConnexionRoute,
   PanierRoute: PanierRoute,
+  RetoursRoute: RetoursRoute,
   SuccessRoute: SuccessRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
   ApiReviewsRoute: ApiReviewsRouteWithChildren,
