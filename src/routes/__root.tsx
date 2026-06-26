@@ -10,6 +10,8 @@ import {
 
 import appCss from "../styles.css?url";
 import { Toaster } from "sonner";
+import { LanguageProvider } from "@/lib/i18n";
+import { getLang } from "@/lib/lang-server";
 
 function NotFoundComponent() {
   return (
@@ -97,6 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  loader: async () => ({ lang: await getLang() }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -119,11 +122,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { lang } = Route.useLoaderData();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <Toaster richColors position="top-center" />
+      <LanguageProvider initialLang={lang}>
+        <Outlet />
+        <Toaster richColors position="top-center" />
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }
