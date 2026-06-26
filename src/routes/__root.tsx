@@ -79,7 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Élimine 99% des bactéries. Livraison gratuite & garantie 30 jours.",
+          "Nettoyez et séchez vos pinceaux de maquillage en moins de 30 secondes. Livraison au Canada et garantie satisfaction 30 jours.",
       },
       { name: "author", content: "Kinetis Brush" },
       { property: "og:title", content: "Kinetis Brush — Pinceaux propres en 30 secondes" },
@@ -90,7 +90,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -108,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
       </head>
