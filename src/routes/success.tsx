@@ -8,10 +8,12 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LangToggle } from "@/components/lang-toggle";
+import { useCart } from "@/hooks/use-cart";
+import { useLang } from "@/lib/i18n";
 import type { AppEnv } from "@/lib/env";
 import { getOrderBySessionId, type Order } from "@/lib/orders";
 import { getStripeClient } from "@/lib/stripe";
-import { useCart } from "@/hooks/use-cart";
 
 // Placeholder posé par la PR #1 tant que la vraie clé n'est pas injectée.
 const STRIPE_KEY_PLACEHOLDER = "sk_test_PLACEHOLDER_REPLACE_ME";
@@ -87,8 +89,8 @@ export const Route = createFileRoute("/success")({
   component: SuccessPage,
 });
 
-function formatAmount(cents: number, currency: string): string {
-  return new Intl.NumberFormat("en-CA", {
+function formatAmount(cents: number, currency: string, lang: "fr" | "en"): string {
+  return new Intl.NumberFormat(lang === "en" ? "en-CA" : "fr-CA", {
     style: "currency",
     currency: currency.toUpperCase(),
   }).format(cents / 100);
@@ -113,41 +115,55 @@ function SuccessPage() {
 
 function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center px-6 py-16">
-      <Card className="max-w-lg w-full border-border shadow-md bg-background">{children}</Card>
+    <div className="min-h-screen bg-cream flex flex-col">
+      <div className="absolute top-4 right-4 z-10">
+        <LangToggle />
+      </div>
+      <div className="flex-1 flex items-center justify-center px-6 py-16">
+        <Card className="max-w-lg w-full border-border shadow-md bg-background">{children}</Card>
+      </div>
     </div>
   );
 }
 
 function PaidView({ data }: { data: Extract<LoaderResult, { status: "paid" }> }) {
+  const { lang } = useLang();
+  const fr = lang === "fr";
   const { session, order } = data;
   const emailLine = session.customerEmail
-    ? `Un email de confirmation a été envoyé à ${session.customerEmail}.`
-    : "Un email de confirmation a été envoyé.";
+    ? fr
+      ? `Un email de confirmation a été envoyé à ${session.customerEmail}.`
+      : `A confirmation email has been sent to ${session.customerEmail}.`
+    : fr
+      ? "Un email de confirmation a été envoyé."
+      : "A confirmation email has been sent.";
 
   return (
     <PageShell>
       <CardHeader>
         <CardTitle className="font-display text-3xl text-foreground">
-          Merci pour ta commande 🎉
+          {fr ? "Merci pour ta commande 🎉" : "Thank you for your order 🎉"}
         </CardTitle>
         <CardDescription className="text-muted-foreground">{emailLine}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="text-3xl font-semibold text-rose-gold">
-          {formatAmount(session.amountTotal, session.currency)}
+          {formatAmount(session.amountTotal, session.currency, lang)}
         </div>
         <div className="text-sm text-muted-foreground">
           {order ? (
             <>
-              Numéro de commande : <span className="font-mono text-foreground">{order.id}</span>
+              {fr ? "Numéro de commande :" : "Order number:"}{" "}
+              <span className="font-mono text-foreground">{order.id}</span>
             </>
-          ) : (
+          ) : fr ? (
             "Confirmation en cours…"
+          ) : (
+            "Confirming…"
           )}
         </div>
         <Button asChild className="gradient-rose text-white hover:opacity-90">
-          <Link to="/">Retour à l'accueil</Link>
+          <Link to="/">{fr ? "Retour à l'accueil" : "Back to home"}</Link>
         </Button>
       </CardContent>
     </PageShell>
@@ -155,6 +171,8 @@ function PaidView({ data }: { data: Extract<LoaderResult, { status: "paid" }> })
 }
 
 function PendingView() {
+  const { lang } = useLang();
+  const fr = lang === "fr";
   const router = useRouter();
   const [retries, setRetries] = useState(0);
   const exhausted = retries >= MAX_PENDING_RETRIES;
@@ -173,15 +191,19 @@ function PendingView() {
       <PageShell>
         <CardHeader>
           <CardTitle className="font-display text-2xl text-foreground">
-            Confirmation plus longue que prévu
+            {fr
+              ? "Confirmation plus longue que prévu"
+              : "Confirmation is taking longer than expected"}
           </CardTitle>
           <CardDescription className="text-muted-foreground">
-            Le paiement met du temps à se confirmer. Vérifie tes emails ou contacte-nous.
+            {fr
+              ? "Le paiement met du temps à se confirmer. Vérifie tes emails ou contacte-nous."
+              : "The payment is taking a while to confirm. Check your emails or get in touch."}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Button asChild className="gradient-rose text-white hover:opacity-90">
-            <Link to="/">Retour</Link>
+            <Link to="/">{fr ? "Retour" : "Back"}</Link>
           </Button>
         </CardContent>
       </PageShell>
@@ -193,10 +215,12 @@ function PendingView() {
       <CardHeader>
         <CardTitle className="font-display text-2xl text-foreground flex items-center gap-3">
           <Loader2 className="h-5 w-5 animate-spin text-rose-gold" />
-          Vérification du paiement en cours…
+          {fr ? "Vérification du paiement en cours…" : "Verifying payment…"}
         </CardTitle>
         <CardDescription className="text-muted-foreground">
-          Si le paiement a été effectué, cette page sera mise à jour automatiquement.
+          {fr
+            ? "Si le paiement a été effectué, cette page sera mise à jour automatiquement."
+            : "If the payment went through, this page will update automatically."}
         </CardDescription>
       </CardHeader>
     </PageShell>
