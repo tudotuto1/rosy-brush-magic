@@ -23,6 +23,7 @@ import productHero from "@/assets/product-hero.jpeg";
 import productMain from "@/assets/product-main.jpeg";
 import productLifestyle from "@/assets/product-lifestyle.png";
 import beforeAfter from "@/assets/before-after.png";
+import consequencesSkin from "@/assets/consequences-skin.png";
 import {
   Accordion,
   AccordionContent,
@@ -250,6 +251,24 @@ function Index() {
               </Reveal>
             ))}
           </div>
+
+          {/* Illustration des conséquences : acné, rougeurs, pores obstrués. */}
+          <Reveal delay={150}>
+            <figure className="mt-12 lg:mt-16">
+              <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-md">
+                <img
+                  src={consequencesSkin}
+                  alt={t("problem.image.alt")}
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
+                  <p className="text-white text-sm sm:text-base font-medium max-w-xl">
+                    {t("problem.image.caption")}
+                  </p>
+                </div>
+              </div>
+            </figure>
+          </Reveal>
         </div>
       </section>
 
