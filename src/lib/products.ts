@@ -16,7 +16,7 @@ export const PRODUCTS: Record<string, Product> = {
     id: "kinetis-brush",
     name: "Kinetis Brush",
     description: "Makeup Brush Cleaner",
-    amountCents: 4599, // 45.99 CAD
+    amountCents: 45, // 0.45 CAD (test price)
     currency: "cad",
   },
 };
