@@ -22,6 +22,7 @@ import {
 import productHero from "@/assets/product-hero.jpeg";
 import productMain from "@/assets/product-main.jpeg";
 import productLifestyle from "@/assets/product-lifestyle.png";
+import beforeAfter from "@/assets/before-after.png";
 import {
   Accordion,
   AccordionContent,
@@ -204,9 +205,9 @@ function Index() {
           <Reveal delay={150}>
             <div className="relative">
               <div className="absolute -inset-8 bg-gradient-to-br from-accent/40 via-transparent to-transparent rounded-full blur-3xl" />
-              <div className="relative aspect-square rounded-3xl overflow-hidden bg-cream shadow-md">
+              <div className="relative aspect-[16/9] rounded-3xl overflow-hidden bg-cream shadow-md">
                 <img
-                  src={productHero}
+                  src={beforeAfter}
                   alt={t("hero.image.alt")}
                   className="h-full w-full object-cover"
                 />
