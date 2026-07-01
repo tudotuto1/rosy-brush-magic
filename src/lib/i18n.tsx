@@ -35,6 +35,10 @@ const fr: Dict = {
   "problem.card3.title": "La solution",
   "problem.card3.text":
     "Notre technologie rotative élimine les impuretés en profondeur en moins de 30 secondes.",
+  "problem.image.alt":
+    "Gros plan d'un visage aux joues rouges et irritées, avec un pinceau sale appliqué sur la peau",
+  "problem.image.caption":
+    "Un pinceau sale dépose bactéries et sébum directement sur votre peau — une cause fréquente d'acné et de rougeurs.",
 
   "how.eyebrow": "Comment ça marche",
   "how.title": "Propre et sec en 3 étapes",
@@ -124,6 +128,10 @@ const en: Dict = {
   "problem.card2.text": "They trigger breakouts, redness and clogged pores on your skin.",
   "problem.card3.title": "The solution",
   "problem.card3.text": "Our rotary technology deep-cleans every impurity in under 30 seconds.",
+  "problem.image.alt":
+    "Close-up of a face with red, irritated cheeks while a dirty brush is applied to the skin",
+  "problem.image.caption":
+    "A dirty brush deposits bacteria and oil straight onto your skin — a common cause of breakouts and redness.",
 
   "how.eyebrow": "How it works",
   "how.title": "Clean and dry in 3 steps",
