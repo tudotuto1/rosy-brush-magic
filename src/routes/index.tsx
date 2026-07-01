@@ -25,6 +25,7 @@ import productLifestyle from "@/assets/product-lifestyle.png";
 import beforeAfter from "@/assets/before-after.png";
 import consequencesSkin from "@/assets/consequences-skin.png";
 import solutionBrush from "@/assets/solution-brush.png";
+import brushCareSystem from "@/assets/brush-care-system.png";
 import {
   Accordion,
   AccordionContent,
@@ -113,7 +114,9 @@ function Index() {
       icon: Ruler,
       title: t("features.adapt.title"),
       text: t("features.adapt.text"),
-      img: productMain,
+      img: brushCareSystem,
+      // Composition large (3 colonnes) → format 16:9 pour tout afficher sans rognage.
+      aspect: "aspect-[16/9]",
       reverse: false,
     },
     {
@@ -121,6 +124,7 @@ function Index() {
       title: t("features.gentle.title"),
       text: t("features.gentle.text"),
       img: productLifestyle,
+      aspect: "aspect-[4/3]",
       reverse: true,
     },
     {
@@ -128,6 +132,7 @@ function Index() {
       title: t("features.usb.title"),
       text: t("features.usb.text"),
       img: productHero,
+      aspect: "aspect-[4/3]",
       reverse: false,
     },
   ];
@@ -342,7 +347,9 @@ function Index() {
                 className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${f.reverse ? "lg:[&>div:first-child]:order-2" : ""}`}
               >
                 <div>
-                  <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-background shadow-md">
+                  <div
+                    className={`${f.aspect} rounded-3xl overflow-hidden bg-background shadow-md`}
+                  >
                     <img src={f.img} alt={f.title} className="h-full w-full object-cover" />
                   </div>
                 </div>
