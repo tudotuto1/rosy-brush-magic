@@ -16,7 +16,7 @@ export const PRODUCTS: Record<string, Product> = {
     id: "kinetis-brush",
     name: "Kinetis Brush",
     description: "Makeup Brush Cleaner",
-    amountCents: 45, // 0.45 CAD (test price)
+    amountCents: 50, // 0.50 CAD (test price — Stripe rejette tout montant < 0,50 $ CAD)
     currency: "cad",
   },
 };
