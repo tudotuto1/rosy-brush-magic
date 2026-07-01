@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   ShoppingBag,
   ArrowRight,
@@ -44,7 +44,15 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
@@ -60,7 +68,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   return (
     <div
       ref={ref}
-      className={shown ? "animate-fade-in-up" : "opacity-0"}
+      className={`${shown ? "animate-fade-in-up" : "opacity-0"} ${className}`.trim()}
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}
@@ -238,37 +246,40 @@ function Index() {
               </h2>
             </div>
           </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 grid-flow-row-dense">
             {problemCards.map((c, i) => (
-              <Reveal key={c.title} delay={i * 100}>
-                <div className="h-full bg-background rounded-3xl p-8 border border-border hover:shadow-md transition-shadow">
-                  <div className="h-12 w-12 rounded-2xl bg-accent/40 flex items-center justify-center mb-5">
-                    <c.icon className="h-6 w-6 text-rose-gold" />
+              <Fragment key={c.title}>
+                <Reveal delay={i * 100}>
+                  <div className="h-full bg-background rounded-3xl p-8 border border-border hover:shadow-md transition-shadow">
+                    <div className="h-12 w-12 rounded-2xl bg-accent/40 flex items-center justify-center mb-5">
+                      <c.icon className="h-6 w-6 text-rose-gold" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2">{c.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{c.text}</p>
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{c.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{c.text}</p>
-                </div>
-              </Reveal>
+                </Reveal>
+
+                {/* Illustration des conséquences (acné, rougeurs), juste sous la
+                    carte « La conséquence » en mobile ; pleine largeur en desktop. */}
+                {i === 1 && (
+                  <Reveal delay={150} className="md:col-span-3">
+                    <figure className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-md">
+                      <img
+                        src={consequencesSkin}
+                        alt={t("problem.image.alt")}
+                        className="h-full w-full object-cover"
+                      />
+                      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
+                        <p className="text-white text-sm sm:text-base font-medium max-w-xl">
+                          {t("problem.image.caption")}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                )}
+              </Fragment>
             ))}
           </div>
-
-          {/* Illustration des conséquences : acné, rougeurs, pores obstrués. */}
-          <Reveal delay={150}>
-            <figure className="mt-12 lg:mt-16">
-              <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-md">
-                <img
-                  src={consequencesSkin}
-                  alt={t("problem.image.alt")}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
-                  <p className="text-white text-sm sm:text-base font-medium max-w-xl">
-                    {t("problem.image.caption")}
-                  </p>
-                </div>
-              </div>
-            </figure>
-          </Reveal>
         </div>
       </section>
 
