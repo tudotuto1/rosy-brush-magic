@@ -39,6 +39,10 @@ const fr: Dict = {
     "Gros plan d'un visage aux joues rouges et irritées, avec un pinceau sale appliqué sur la peau",
   "problem.image.caption":
     "Un pinceau sale dépose bactéries et sébum directement sur votre peau — une cause fréquente d'acné et de rougeurs.",
+  "solution.image.alt":
+    "Avant / après : pinceau incrusté de fond de teint à gauche, propre et nettoyé dans l'eau à droite",
+  "solution.image.caption":
+    "Avant / après : en moins de 30 secondes, votre pinceau retrouve une propreté parfaite.",
 
   "how.eyebrow": "Comment ça marche",
   "how.title": "Propre et sec en 3 étapes",
@@ -132,6 +136,10 @@ const en: Dict = {
     "Close-up of a face with red, irritated cheeks while a dirty brush is applied to the skin",
   "problem.image.caption":
     "A dirty brush deposits bacteria and oil straight onto your skin — a common cause of breakouts and redness.",
+  "solution.image.alt":
+    "Before / after: a brush caked with foundation on the left, clean and rinsed in water on the right",
+  "solution.image.caption":
+    "Before / after: in under 30 seconds, your brush is perfectly clean again.",
 
   "how.eyebrow": "How it works",
   "how.title": "Clean and dry in 3 steps",

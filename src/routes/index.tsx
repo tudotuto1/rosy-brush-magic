@@ -24,6 +24,7 @@ import productMain from "@/assets/product-main.jpeg";
 import productLifestyle from "@/assets/product-lifestyle.png";
 import beforeAfter from "@/assets/before-after.png";
 import consequencesSkin from "@/assets/consequences-skin.png";
+import solutionBrush from "@/assets/solution-brush.png";
 import {
   Accordion,
   AccordionContent,
@@ -272,6 +273,25 @@ function Index() {
                       <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
                         <p className="text-white text-sm sm:text-base font-medium max-w-xl">
                           {t("problem.image.caption")}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                )}
+
+                {/* Illustration de la solution (avant / après), juste sous la
+                    carte « La solution » en mobile ; pleine largeur en desktop. */}
+                {i === 2 && (
+                  <Reveal delay={150} className="md:col-span-3">
+                    <figure className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-md">
+                      <img
+                        src={solutionBrush}
+                        alt={t("solution.image.alt")}
+                        className="h-full w-full object-cover"
+                      />
+                      <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
+                        <p className="text-white text-sm sm:text-base font-medium max-w-xl">
+                          {t("solution.image.caption")}
                         </p>
                       </figcaption>
                     </figure>
