@@ -63,6 +63,16 @@ const fr: Dict = {
   "features.usb.text":
     "Une batterie longue durée pour des semaines d'utilisation. Compact, sans fil, pensé pour votre coiffeuse.",
 
+  "compare.eyebrow": "La comparaison",
+  "compare.title": "Pourquoi pas les méthodes classiques ?",
+  "compare.subtitle":
+    "Machine à laver, lavage à la main… les autres méthodes abîment vos pinceaux ou ne les nettoient jamais vraiment. Kinetis Brush fait mieux, sans effort.",
+  "compare.image.alt":
+    "Comparatif de trois méthodes : chaussette + machine à laver et lavage à la main (déconseillés) face au nettoyeur automatique Kinetis Brush",
+  "compare.image.caption":
+    "Chaussette + machine et lavage à la main abîment les poils et laissent des résidus. Le nettoyage automatique 360° est doux, rapide et impeccable à chaque fois.",
+  "compare.cta": "Je choisis la bonne méthode",
+
   "buy.image.alt": "Kinetis Brush — offre du jour",
   "buy.price.value": "45,99 $",
   "buy.price.currency": "CAD",
@@ -159,6 +169,16 @@ const en: Dict = {
   "features.usb.title": "USB-C rechargeable",
   "features.usb.text":
     "A long-lasting battery for weeks of use. Compact, cordless, designed to live on your vanity.",
+
+  "compare.eyebrow": "The comparison",
+  "compare.title": "Why not the usual methods?",
+  "compare.subtitle":
+    "Washing machine, hand washing… every other method either damages your brushes or never truly cleans them. Kinetis Brush does it better, effortlessly.",
+  "compare.image.alt":
+    "Comparison of three methods: sock + washing machine and hand washing (not recommended) versus the automatic Kinetis Brush cleaner",
+  "compare.image.caption":
+    "Sock + machine and hand washing bend the bristles and leave residue behind. Automatic 360° cleaning is gentle, fast and crystal clean every time.",
+  "compare.cta": "I'll pick the right method",
 
   "buy.image.alt": "Kinetis Brush — today's offer",
   "buy.price.value": "$45.99",

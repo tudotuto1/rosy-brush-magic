@@ -26,6 +26,7 @@ import beforeAfter from "@/assets/before-after.png";
 import consequencesSkin from "@/assets/consequences-skin.png";
 import solutionBrush from "@/assets/solution-brush.png";
 import brushCareSystem from "@/assets/brush-care-system.png";
+import comparisonMethods from "@/assets/comparison-methods.png";
 import {
   Accordion,
   AccordionContent,
@@ -363,6 +364,50 @@ function Index() {
               </div>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* G. Comparaison / argumentation : méthodes DIY vs solution automatique */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-5xl mx-auto px-6">
+          <Reveal>
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <p className="text-xs uppercase tracking-[0.2em] text-rose-gold mb-3 font-semibold">
+                {t("compare.eyebrow")}
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight">
+                {t("compare.title")}
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground mt-4 leading-relaxed">
+                {t("compare.subtitle")}
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <figure className="space-y-4">
+              <div className="rounded-3xl overflow-hidden bg-cream shadow-md">
+                <img
+                  src={comparisonMethods}
+                  alt={t("compare.image.alt")}
+                  className="w-full h-auto"
+                />
+              </div>
+              <figcaption className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+                {t("compare.image.caption")}
+              </figcaption>
+            </figure>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="text-center mt-10">
+              <a
+                href="#buy"
+                className="group inline-flex items-center gap-3 gradient-rose text-white px-7 py-4 rounded-2xl font-semibold shadow-md hover:shadow-xl hover:scale-[1.02] transition-all"
+              >
+                {t("compare.cta")}
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
