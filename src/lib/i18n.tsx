@@ -78,6 +78,7 @@ const fr: Dict = {
   "compare.cta": "Je choisis la bonne méthode",
 
   "buy.image.alt": "Kinetis Brush — offre du jour",
+  "buy.image.alt2": "Kinetis Brush en action, nettoyant plusieurs pinceaux dans l'eau",
   "buy.price.value": "45,99 $",
   "buy.price.currency": "CAD",
   "buy.cta": "Ajouter au panier — 45,99 $",
@@ -189,6 +190,7 @@ const en: Dict = {
   "compare.cta": "I'll pick the right method",
 
   "buy.image.alt": "Kinetis Brush — today's offer",
+  "buy.image.alt2": "Kinetis Brush in action, cleaning several brushes in water",
   "buy.price.value": "$45.99",
   "buy.price.currency": "CAD",
   "buy.cta": "Add to cart — $45.99 CAD",
