@@ -71,6 +71,12 @@ async function handleCheckout(request: Request): Promise<Response> {
           },
         },
       ],
+      // Collecte l'adresse de livraison côté Stripe Checkout, limitée
+      // au Canada et aux USA. Stripe capture aussi le nom dans
+      // `customer_details` quand l'adresse est demandée.
+      shipping_address_collection: {
+        allowed_countries: ["CA", "US"],
+      },
       success_url: `${appEnv.PUBLIC_APP_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appEnv.PUBLIC_APP_URL}/?canceled=true`,
       metadata: {
