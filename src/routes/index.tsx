@@ -28,12 +28,21 @@ import solutionBrush from "@/assets/solution-brush.png";
 import brushCareSystem from "@/assets/brush-care-system.png";
 import comparisonMethods from "@/assets/comparison-methods.png";
 import usbCharging from "@/assets/usb-c-charging.png";
+import productCleaning from "@/assets/product-cleaning.png";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "sonner";
 import { ReviewsSection } from "@/components/reviews-section";
@@ -76,6 +85,59 @@ function Reveal({
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}
+    </div>
+  );
+}
+
+/**
+ * Galerie produit de la buy box : plusieurs photos, navigation par glissement
+ * (swipe tactile natif via Embla) + flèches gauche/droite + pastilles.
+ */
+function ProductGallery({ images }: { images: { src: string; alt: string }[] }) {
+  const { lang } = useLang();
+  const fr = lang === "fr";
+  const [api, setApi] = useState<CarouselApi>();
+  const [selected, setSelected] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setSelected(api.selectedScrollSnap());
+    onSelect();
+    api.on("select", onSelect);
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  return (
+    <div className="space-y-4">
+      <Carousel setApi={setApi} opts={{ loop: true }} className="w-full">
+        <CarouselContent className="ml-0">
+          {images.map((image, i) => (
+            <CarouselItem key={i} className="pl-0">
+              <div className="aspect-square rounded-3xl overflow-hidden bg-cream">
+                <img src={image.src} alt={image.alt} className="h-full w-full object-cover" />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-3 bg-background/80 backdrop-blur-sm" />
+        <CarouselNext className="right-3 bg-background/80 backdrop-blur-sm" />
+      </Carousel>
+      <div className="flex justify-center gap-2">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => api?.scrollTo(i)}
+            aria-label={fr ? `Voir la photo ${i + 1}` : `View photo ${i + 1}`}
+            aria-current={selected === i}
+            className={`h-2 rounded-full transition-all ${
+              selected === i ? "w-6 bg-rose-gold" : "w-2 bg-border hover:bg-muted-foreground/40"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -434,13 +496,12 @@ function Index() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center bg-background rounded-[2rem] p-6 sm:p-10 lg:p-14 shadow-md border border-border">
             <Reveal>
-              <div className="aspect-square rounded-3xl overflow-hidden bg-cream">
-                <img
-                  src={productMain}
-                  alt={t("buy.image.alt")}
-                  className="h-full w-full object-cover"
-                />
-              </div>
+              <ProductGallery
+                images={[
+                  { src: productMain, alt: t("buy.image.alt") },
+                  { src: productCleaning, alt: t("buy.image.alt2") },
+                ]}
+              />
             </Reveal>
             <Reveal delay={120}>
               <div className="space-y-6">
