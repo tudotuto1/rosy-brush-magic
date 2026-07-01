@@ -30,6 +30,12 @@ async function handleCheckoutSessionCompleted(
   const parsedQuantity = parseInt(quantityStr, 10);
   const quantity = Number.isNaN(parsedQuantity) ? 1 : parsedQuantity;
 
+  // Adresse de livraison collectée par Stripe Checkout
+  // (`collected_information.shipping_details` sur l'API courante).
+  const shippingDetails = session.collected_information?.shipping_details ?? null;
+  const shippingName = shippingDetails?.name ?? null;
+  const shippingAddress = shippingDetails?.address ? JSON.stringify(shippingDetails.address) : null;
+
   // Idempotence : Stripe peut renvoyer le même event plusieurs fois.
   const existing = await getOrderBySessionId(appEnv.ORDERS_KV, sessionId);
   if (existing) {
@@ -66,6 +72,8 @@ async function handleCheckoutSessionCompleted(
       productId,
       quantity,
       status: "paid",
+      shippingName,
+      shippingAddress,
       createdAt: now,
       updatedAt: now,
     })

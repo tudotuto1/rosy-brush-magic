@@ -17,6 +17,9 @@ export const orders = sqliteTable("orders", {
   productId: text("product_id"),
   quantity: integer("quantity").notNull().default(1),
   status: text("status").notNull().default("paid"),
+  shippingName: text("shipping_name"),
+  // JSON complet de l'adresse Stripe (line1, line2, city, state, postal_code, country).
+  shippingAddress: text("shipping_address"),
   trackingNumber: text("tracking_number"),
   carrier: text("carrier"),
   trackingStatus: text("tracking_status"),

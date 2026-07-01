@@ -47,6 +47,30 @@ function formatAmount(cents: number, currency: string): string {
   }).format(cents / 100);
 }
 
+type ShippingAddress = {
+  line1?: string | null;
+  line2?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postal_code?: string | null;
+  country?: string | null;
+};
+
+/** Découpe l'adresse Stripe (JSON) en lignes lisibles. Renvoie [] si vide/illisible. */
+function formatShippingAddress(raw: string | null): string[] {
+  if (!raw) return [];
+  let addr: ShippingAddress;
+  try {
+    addr = JSON.parse(raw) as ShippingAddress;
+  } catch {
+    return [];
+  }
+  const cityLine = [addr.city, addr.state, addr.postal_code].filter(Boolean).join(" ");
+  return [addr.line1, addr.line2, cityLine, addr.country].filter(
+    (line): line is string => Boolean(line) && line!.trim().length > 0,
+  );
+}
+
 function AdminPage() {
   const { orders, pendingReviews } = Route.useLoaderData();
 
@@ -260,6 +284,8 @@ function AdminOrderCard({ order }: { order: Order }) {
 
   const dateLabel = dateFormatter.format(new Date(order.createdAt));
   const amountLabel = formatAmount(order.amountTotal, order.currency);
+  const addressLines = formatShippingAddress(order.shippingAddress);
+  const hasShipping = Boolean(order.shippingName) || addressLines.length > 0;
 
   return (
     <article className="bg-background rounded-3xl border border-border p-6 sm:p-7 space-y-5">
@@ -281,6 +307,22 @@ function AdminOrderCard({ order }: { order: Order }) {
           <div className="text-xs text-muted-foreground capitalize">{order.status}</div>
         </div>
       </header>
+
+      {hasShipping && (
+        <div className="rounded-2xl bg-cream border border-border p-4 text-sm">
+          <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+            Adresse de livraison
+          </div>
+          {order.shippingName && (
+            <div className="font-medium text-foreground">{order.shippingName}</div>
+          )}
+          {addressLines.map((line, i) => (
+            <div key={i} className="text-muted-foreground">
+              {line}
+            </div>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="grid sm:grid-cols-3 gap-3">
         <label className="text-sm space-y-1">
