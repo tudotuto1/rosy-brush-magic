@@ -62,6 +62,10 @@ const fr: Dict = {
   "features.usb.title": "Rechargeable via USB-C",
   "features.usb.text":
     "Une batterie longue durée pour des semaines d'utilisation. Compact, sans fil, pensé pour votre coiffeuse.",
+  "features.usb.image.alt":
+    "Base du Kinetis Brush posée sur un marbre, avec un câble USB-C tressé rose doré branché",
+  "features.usb.image.caption":
+    "Une simple charge USB-C suffit pour des semaines d'utilisation — sans fil, sans pile à remplacer.",
 
   "compare.eyebrow": "La comparaison",
   "compare.title": "Pourquoi pas les méthodes classiques ?",
@@ -169,6 +173,10 @@ const en: Dict = {
   "features.usb.title": "USB-C rechargeable",
   "features.usb.text":
     "A long-lasting battery for weeks of use. Compact, cordless, designed to live on your vanity.",
+  "features.usb.image.alt":
+    "The Kinetis Brush base on marble, with a braided rose-gold USB-C cable plugged in",
+  "features.usb.image.caption":
+    "A single USB-C charge lasts for weeks of use — cordless, with no batteries to replace.",
 
   "compare.eyebrow": "The comparison",
   "compare.title": "Why not the usual methods?",

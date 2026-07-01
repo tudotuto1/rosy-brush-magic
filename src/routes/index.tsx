@@ -27,6 +27,7 @@ import consequencesSkin from "@/assets/consequences-skin.png";
 import solutionBrush from "@/assets/solution-brush.png";
 import brushCareSystem from "@/assets/brush-care-system.png";
 import comparisonMethods from "@/assets/comparison-methods.png";
+import usbCharging from "@/assets/usb-c-charging.png";
 import {
   Accordion,
   AccordionContent,
@@ -364,6 +365,23 @@ function Index() {
               </div>
             </Reveal>
           ))}
+
+          {/* Illustration USB-C : câble branché sur la base, juste sous la
+              fonctionnalité « USB-C rechargeable ». */}
+          <Reveal delay={120}>
+            <figure className="space-y-4">
+              <div className="aspect-[16/9] rounded-3xl overflow-hidden bg-background shadow-md">
+                <img
+                  src={usbCharging}
+                  alt={t("features.usb.image.alt")}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <figcaption className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
+                {t("features.usb.image.caption")}
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
       </section>
 
