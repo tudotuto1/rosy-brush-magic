@@ -19,7 +19,8 @@ const fr: Dict = {
   "hero.bullet.shipping": "Livraison offerte",
   "hero.bullet.guarantee": "Garantie 30 jours",
   "hero.bullet.payment": "Paiement sécurisé",
-  "hero.image.alt": "Kinetis Brush nettoyeur de pinceaux électrique sur une coiffeuse",
+  "hero.image.alt":
+    "Avant / après : pinceau sale et terne à gauche, propre et comme neuf dans le Kinetis Brush à droite",
   "hero.image.label": "Propres en",
   "hero.image.value": "30 secondes",
 
@@ -110,7 +111,8 @@ const en: Dict = {
   "hero.bullet.shipping": "Free shipping",
   "hero.bullet.guarantee": "30-day guarantee",
   "hero.bullet.payment": "Secure payment",
-  "hero.image.alt": "Kinetis Brush electric makeup brush cleaner on a vanity",
+  "hero.image.alt":
+    "Before / after: a dirty, dull brush on the left, clean and like-new inside the Kinetis Brush on the right",
   "hero.image.label": "Clean in",
   "hero.image.value": "30 seconds",
 
