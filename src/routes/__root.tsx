@@ -12,6 +12,10 @@ import appCss from "../styles.css?url";
 import { Toaster } from "sonner";
 import { LanguageProvider } from "@/lib/i18n";
 import { getLang } from "@/lib/lang-server";
+import { ConsentProvider } from "@/lib/consent";
+import { getConsent, getMetaPixelId } from "@/lib/consent-server";
+import { ConsentBanner } from "@/components/consent-banner";
+import { MetaPixel } from "@/components/meta-pixel";
 
 function NotFoundComponent() {
   return (
@@ -98,7 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
-  loader: async () => ({ lang: await getLang() }),
+  loader: async () => ({
+    lang: await getLang(),
+    consent: await getConsent(),
+    pixelId: await getMetaPixelId(),
+  }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -121,13 +129,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const { lang } = Route.useLoaderData();
+  const { lang, consent, pixelId } = Route.useLoaderData();
 
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider initialLang={lang}>
-        <Outlet />
-        <Toaster richColors position="top-center" />
+        <ConsentProvider initialStatus={consent}>
+          <Outlet />
+          <MetaPixel pixelId={pixelId} />
+          <ConsentBanner />
+          <Toaster richColors position="top-center" />
+        </ConsentProvider>
       </LanguageProvider>
     </QueryClientProvider>
   );
