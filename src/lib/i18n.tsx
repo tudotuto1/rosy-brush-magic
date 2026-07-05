@@ -79,9 +79,8 @@ const fr: Dict = {
 
   "buy.image.alt": "Kinetis Brush — offre du jour",
   "buy.image.alt2": "Kinetis Brush en action, nettoyant plusieurs pinceaux dans l'eau",
-  "buy.price.value": "45,99 $",
   "buy.price.currency": "CAD",
-  "buy.cta": "Ajouter au panier — 45,99 $",
+  "buy.cta": "Ajouter au panier — {price}",
   "buy.bullet.secure": "Paiement sécurisé",
   "buy.bullet.methods": "Visa · Mastercard · Apple Pay",
   "buy.bullet.guarantee": "Garantie 30 jours",
@@ -191,9 +190,8 @@ const en: Dict = {
 
   "buy.image.alt": "Kinetis Brush — today's offer",
   "buy.image.alt2": "Kinetis Brush in action, cleaning several brushes in water",
-  "buy.price.value": "$45.99",
   "buy.price.currency": "CAD",
-  "buy.cta": "Add to cart — $45.99 CAD",
+  "buy.cta": "Add to cart — {price}",
   "buy.bullet.secure": "Secure payment",
   "buy.bullet.methods": "Visa · Mastercard · Apple Pay",
   "buy.bullet.guarantee": "30-day guarantee",

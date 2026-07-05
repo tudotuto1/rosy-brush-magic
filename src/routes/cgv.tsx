@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { LegalPage } from "@/components/legal-page";
 import { useLang } from "@/lib/i18n";
+import { KINETIS_BRUSH, formatPrice } from "@/lib/products";
 
 export const Route = createFileRoute("/cgv")({
   component: CgvPage,
@@ -35,8 +36,9 @@ function CgvFr() {
       <h2 className="font-display text-xl text-foreground pt-2">Produits et prix</h2>
       <p>
         Produits décrits avec précision ; prix en <strong>dollars canadiens (CAD)</strong> ; brosse
-        Kinetis à <strong>45,99 $ CAD</strong> ; taxes applicables le cas échéant indiquées au
-        paiement.
+        Kinetis à{" "}
+        <strong>{formatPrice(KINETIS_BRUSH.amountCents, "fr", { withCurrency: true })}</strong> ;
+        taxes applicables le cas échéant indiquées au paiement.
       </p>
 
       <h2 className="font-display text-xl text-foreground pt-2">Commande et paiement</h2>
@@ -105,7 +107,8 @@ function CgvEn() {
       <h2 className="font-display text-xl text-foreground pt-2">Products and prices</h2>
       <p>
         Products are described as accurately as possible; prices are in{" "}
-        <strong>Canadian dollars (CAD)</strong>; the Kinetis brush is <strong>$45.99 CAD</strong>;
+        <strong>Canadian dollars (CAD)</strong>; the Kinetis brush is{" "}
+        <strong>{formatPrice(KINETIS_BRUSH.amountCents, "en", { withCurrency: true })}</strong>;
         applicable taxes, if any, are shown at checkout.
       </p>
 
