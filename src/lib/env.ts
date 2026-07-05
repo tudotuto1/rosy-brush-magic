@@ -2,6 +2,7 @@ export type AppEnv = {
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
   PUBLIC_APP_URL: string;
+  PUBLIC_META_PIXEL_ID: string;
   ORDERS_KV: KVNamespace;
   DB: D1Database;
   BETTER_AUTH_SECRET: string;

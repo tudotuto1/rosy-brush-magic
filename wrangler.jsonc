@@ -5,7 +5,8 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "src/server.ts",
   "vars": {
-    "PUBLIC_APP_URL": "https://kinetisbrush.com"
+    "PUBLIC_APP_URL": "https://kinetisbrush.com",
+    "PUBLIC_META_PIXEL_ID": "1914614985872730"
   },
   "kv_namespaces": [
     {

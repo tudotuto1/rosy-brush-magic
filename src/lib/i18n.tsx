@@ -116,6 +116,12 @@ const fr: Dict = {
   "footer.secure": "Paiement 100% sécurisé",
 
   "toast.canceled": "Paiement annulé. Vous pouvez réessayer.",
+
+  "consent.text":
+    "Nous utilisons des témoins pour améliorer ton expérience et mesurer nos publicités. Tu peux accepter ou refuser.",
+  "consent.accept": "Accepter",
+  "consent.decline": "Refuser",
+  "consent.learnMore": "En savoir plus",
 };
 
 const en: Dict = {
@@ -227,6 +233,12 @@ const en: Dict = {
   "footer.secure": "100% secure payment",
 
   "toast.canceled": "Payment cancelled. You can try again.",
+
+  "consent.text":
+    "We use cookies to improve your experience and measure our ads. You can accept or decline.",
+  "consent.accept": "Accept",
+  "consent.decline": "Decline",
+  "consent.learnMore": "Learn more",
 };
 
 export const translations: Record<Lang, Dict> = { fr, en };
