@@ -48,6 +48,7 @@ import { toast } from "sonner";
 import { ReviewsSection } from "@/components/reviews-section";
 import { LangToggle } from "@/components/lang-toggle";
 import { useLang } from "@/lib/i18n";
+import { KINETIS_BRUSH, formatPrice } from "@/lib/products";
 import { getApprovedReviews } from "@/lib/reviews-server";
 
 export const Route = createFileRoute("/")({
@@ -146,7 +147,8 @@ function Index() {
   const { quantity, addToCart, mounted } = useCart();
   const navigate = useNavigate();
   const { reviews } = Route.useLoaderData();
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const priceLabel = formatPrice(KINETIS_BRUSH.amountCents, lang);
 
   useEffect(() => {
     if (window.location.search.includes("canceled=true")) {
@@ -509,7 +511,7 @@ function Index() {
                   Kinetis Brush
                 </h2>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-semibold">{t("buy.price.value")}</span>
+                  <span className="text-4xl font-semibold">{priceLabel}</span>
                   <span className="text-sm text-muted-foreground">{t("buy.price.currency")}</span>
                 </div>
                 <button
@@ -518,7 +520,7 @@ function Index() {
                   className="group flex items-center justify-center gap-3 w-full gradient-rose text-white px-7 py-5 rounded-2xl font-semibold text-lg shadow-md hover:shadow-xl hover:scale-[1.01] transition-all"
                 >
                   <ShoppingBag className="h-5 w-5" />
-                  {t("buy.cta")}
+                  {t("buy.cta").replace("{price}", priceLabel)}
                 </button>
                 <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-2 text-xs text-muted-foreground">
                   <span className="inline-flex items-center gap-1.5">

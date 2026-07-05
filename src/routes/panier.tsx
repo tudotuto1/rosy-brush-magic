@@ -19,14 +19,16 @@ import { LangToggle } from "@/components/lang-toggle";
 import { useCart } from "@/hooks/use-cart";
 import { useCheckout } from "@/hooks/use-checkout";
 import { useLang } from "@/lib/i18n";
+import { KINETIS_BRUSH } from "@/lib/products";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/panier")({
   component: PanierPage,
 });
 
-const PRODUCT_ID = "kinetis-brush";
-const UNIT_PRICE_CENTS = 4599; // 45,99 $ CAD (affichage ; le vrai montant vient du serveur)
+// Prix dérivé du catalogue (source de vérité) ; le vrai montant vient du serveur.
+const PRODUCT_ID = KINETIS_BRUSH.id;
+const UNIT_PRICE_CENTS = KINETIS_BRUSH.amountCents;
 
 function PanierPage() {
   const { lang } = useLang();
