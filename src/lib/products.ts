@@ -21,7 +21,7 @@ export const KINETIS_BRUSH: Product = {
   id: "kinetis-brush",
   name: "Kinetis Brush",
   description: "Makeup Brush Cleaner",
-  amountCents: 3499, // 34,99 $ CAD
+  amountCents: 100, // 1,00 $ CAD (prix de test final)
   currency: "cad",
 };
 
