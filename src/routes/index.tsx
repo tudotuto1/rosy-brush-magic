@@ -50,6 +50,7 @@ import { LangToggle } from "@/components/lang-toggle";
 import { useLang } from "@/lib/i18n";
 import { KINETIS_BRUSH, formatPrice } from "@/lib/products";
 import { getApprovedReviews } from "@/lib/reviews-server";
+import { trackPixelEvent } from "@/lib/pixel-events";
 
 export const Route = createFileRoute("/")({
   loader: async () => ({
@@ -162,6 +163,12 @@ function Index() {
 
   function handleAddToCart() {
     addToCart(1);
+    trackPixelEvent("AddToCart", {
+      content_ids: [KINETIS_BRUSH.id],
+      content_type: "product",
+      currency: "CAD",
+      value: KINETIS_BRUSH.amountCents / 100,
+    });
     navigate({ to: "/panier" });
   }
 
