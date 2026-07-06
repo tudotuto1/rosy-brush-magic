@@ -6,6 +6,7 @@ import { orders } from "@/db/schema";
 import type { AppEnv } from "@/lib/env";
 import { getOrderBySessionId, saveOrder, type Order } from "@/lib/orders";
 import { getStripeClient } from "@/lib/stripe";
+import { sendPurchaseCapi } from "@/lib/meta-capi";
 
 // Placeholder posé par la PR #1 tant que le vrai whsec_ n'est pas injecté.
 const WEBHOOK_SECRET_PLACEHOLDER = "whsec_PLACEHOLDER_REPLACE_ME";
@@ -79,6 +80,24 @@ async function handleCheckoutSessionCompleted(
     })
     .onConflictDoNothing({ target: orders.stripeSessionId });
   console.log("[Webhook] Order persisted to D1", order.id);
+
+  // Envoi Purchase via l'API Conversions Meta (server-side), en doublon du
+  // pixel navigateur. Même eventId (order.id) → Meta déduplique les deux.
+  // Ajout PUR : jamais un point de défaillance du webhook.
+  try {
+    await sendPurchaseCapi({
+      pixelId: appEnv.PUBLIC_META_PIXEL_ID,
+      accessToken: appEnv.META_CAPI_ACCESS_TOKEN,
+      eventId: order.id,
+      email: customerEmail,
+      value: amountCents / 100,
+      currency: currency.toUpperCase(),
+      contentIds: [productId],
+    });
+    console.log("[Webhook] Meta CAPI Purchase sent", order.id);
+  } catch (err) {
+    console.error("[webhook] Meta CAPI a échoué (non bloquant):", err);
+  }
 }
 
 async function handleWebhook(request: Request): Promise<Response> {
