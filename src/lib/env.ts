@@ -8,5 +8,6 @@ export type AppEnv = {
   BETTER_AUTH_SECRET: string;
   RESEND_API_KEY: string;
   ADMIN_EMAIL: string;
+  META_CAPI_ACCESS_TOKEN: string;
   PHOTOS: R2Bucket;
 };
