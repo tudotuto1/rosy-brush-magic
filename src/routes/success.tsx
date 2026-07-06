@@ -14,6 +14,8 @@ import { useLang } from "@/lib/i18n";
 import type { AppEnv } from "@/lib/env";
 import { getOrderBySessionId, type Order } from "@/lib/orders";
 import { getStripeClient } from "@/lib/stripe";
+import { KINETIS_BRUSH } from "@/lib/products";
+import { trackPixelEvent } from "@/lib/pixel-events";
 
 // Placeholder posé par la PR #1 tant que la vraie clé n'est pas injectée.
 const STRIPE_KEY_PLACEHOLDER = "sk_test_PLACEHOLDER_REPLACE_ME";
@@ -129,7 +131,30 @@ function PageShell({ children }: { children: React.ReactNode }) {
 function PaidView({ data }: { data: Extract<LoaderResult, { status: "paid" }> }) {
   const { lang } = useLang();
   const fr = lang === "fr";
+  const { session_id } = Route.useSearch();
   const { session, order } = data;
+
+  useEffect(() => {
+    // `order` peut être temporairement absent (course avec le webhook D1/KV),
+    // donc on retombe sur session_id — stable et déjà unique par paiement —
+    // pour la clé de déduplication et l'eventID envoyé à Meta.
+    const orderId = order?.id ?? session_id;
+    const dedupeKey = `pixel_purchase_${orderId}`;
+    if (typeof window === "undefined" || sessionStorage.getItem(dedupeKey)) return;
+
+    trackPixelEvent(
+      "Purchase",
+      {
+        content_ids: [KINETIS_BRUSH.id],
+        currency: session.currency.toUpperCase(),
+        value: session.amountTotal / 100,
+        num_items: order?.quantity ?? 1,
+      },
+      orderId,
+    );
+    sessionStorage.setItem(dedupeKey, "1");
+  }, [order?.id, order?.quantity, session.amountTotal, session.currency, session_id]);
+
   const emailLine = session.customerEmail
     ? fr
       ? `Un email de confirmation a été envoyé à ${session.customerEmail}.`

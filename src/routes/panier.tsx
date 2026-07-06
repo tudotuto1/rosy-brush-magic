@@ -20,6 +20,7 @@ import { useCart } from "@/hooks/use-cart";
 import { useCheckout } from "@/hooks/use-checkout";
 import { useLang } from "@/lib/i18n";
 import { KINETIS_BRUSH } from "@/lib/products";
+import { trackPixelEvent } from "@/lib/pixel-events";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/panier")({
@@ -45,6 +46,16 @@ function PanierPage() {
     currency: "CAD",
   });
   const subtotal = (UNIT_PRICE_CENTS * quantity) / 100;
+
+  function handleCheckout() {
+    trackPixelEvent("InitiateCheckout", {
+      content_ids: [PRODUCT_ID],
+      currency: "CAD",
+      value: subtotal,
+      num_items: quantity,
+    });
+    startCheckout(PRODUCT_ID, quantity);
+  }
 
   const s = fr
     ? {
@@ -241,7 +252,7 @@ function PanierPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => startCheckout(PRODUCT_ID, quantity)}
+                  onClick={handleCheckout}
                   disabled={isLoading}
                   className="group flex items-center justify-center gap-3 w-full gradient-rose text-white px-6 py-4 rounded-2xl font-semibold text-lg shadow-md hover:shadow-xl hover:scale-[1.01] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
