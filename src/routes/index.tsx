@@ -407,6 +407,18 @@ function Index() {
               </Reveal>
             ))}
           </div>
+          <Reveal delay={200}>
+            <video
+              controls
+              playsInline
+              muted
+              loop
+              preload="metadata"
+              className="w-full max-w-3xl mx-auto mt-16 rounded-3xl shadow-md"
+            >
+              <source src="/videos/how-it-works.mp4" type="video/mp4" />
+            </video>
+          </Reveal>
         </div>
       </section>
 
