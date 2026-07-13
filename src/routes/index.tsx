@@ -20,7 +20,6 @@ import {
   User,
 } from "lucide-react";
 import productHero from "@/assets/product-hero.jpeg";
-import productMain from "@/assets/product-main.jpeg";
 import productLifestyle from "@/assets/product-lifestyle.png";
 import beforeAfter from "@/assets/before-after.png";
 import consequencesSkin from "@/assets/consequences-skin.png";
@@ -507,7 +506,7 @@ function Index() {
             <Reveal>
               <ProductGallery
                 images={[
-                  { src: productMain, alt: t("buy.image.alt") },
+                  { src: "/images/product-main.jpg", alt: t("buy.image.alt") },
                   { src: productCleaning, alt: t("buy.image.alt2") },
                 ]}
               />
