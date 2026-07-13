@@ -21,7 +21,7 @@ export const KINETIS_BRUSH: Product = {
   id: "kinetis-brush",
   name: "Kinetis Brush",
   description: "Makeup Brush Cleaner",
-  amountCents: 3499, // 34,99 $ CAD (prix réel)
+  amountCents: 4499, // 44,99 $ CAD (prix réel)
   currency: "cad",
 };
 
@@ -35,8 +35,8 @@ export function getProduct(id: string): Product | null {
 
 /**
  * Formate un montant (en cents) selon la locale, dérivé de `amountCents`.
- *   "fr" → "34,99 $"      ·  "en" → "$34.99"       (le « $ » est le symbole CAD)
- *   withCurrency: true → "34,99 $ CAD" / "$34.99 CAD" (textes légaux, etc.)
+ *   "fr" → "44,99 $"      ·  "en" → "$44.99"       (le « $ » est le symbole CAD)
+ *   withCurrency: true → "44,99 $ CAD" / "$44.99 CAD" (textes légaux, etc.)
  */
 export function formatPrice(
   amountCents: number,

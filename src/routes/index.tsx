@@ -532,6 +532,9 @@ function Index() {
                   <span className="text-4xl font-semibold">{priceLabel}</span>
                   <span className="text-sm text-muted-foreground">{t("buy.price.currency")}</span>
                 </div>
+                <p className="flex items-center gap-1.5 text-xs text-rose-gold font-medium -mt-2">
+                  <Truck className="h-3.5 w-3.5" /> {t("shipping.free")}
+                </p>
                 <button
                   type="button"
                   onClick={handleAddToCart}
