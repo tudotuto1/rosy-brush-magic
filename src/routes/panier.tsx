@@ -87,6 +87,7 @@ function PanierPage() {
         total: "Total",
         checkout: "Passer au paiement",
         redirecting: "Redirection…",
+        freeShippingNote: "Livraison gratuite",
       }
     : {
         back: "Continue shopping",
@@ -117,6 +118,7 @@ function PanierPage() {
         total: "Total",
         checkout: "Proceed to checkout",
         redirecting: "Redirecting…",
+        freeShippingNote: "Free shipping",
       };
 
   // Map bullets to icons (kept stable across languages by index).
@@ -250,6 +252,9 @@ function PanierPage() {
                   <span className="font-semibold">{s.total}</span>
                   <span className="text-2xl font-semibold">{cad.format(subtotal)}</span>
                 </div>
+                <p className="flex items-center justify-center gap-1.5 text-xs text-rose-gold font-medium">
+                  <Truck className="h-3.5 w-3.5" /> {s.freeShippingNote}
+                </p>
                 <button
                   type="button"
                   onClick={handleCheckout}
