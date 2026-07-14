@@ -18,6 +18,8 @@ import {
   ChevronDown,
   CreditCard,
   User,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import productHero from "@/assets/product-hero.jpeg";
 import productLifestyle from "@/assets/product-lifestyle.png";
@@ -139,6 +141,52 @@ function ProductGallery({ images }: { images: { src: string; alt: string }[] }) 
           />
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Vidéo "how it works" : lecture auto silencieuse (obligatoire pour
+ * l'autoplay navigateur), bouton overlay pour activer le son à la demande.
+ */
+function HowItWorksVideo() {
+  const { t } = useLang();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  function toggleMute() {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setMuted(video.muted);
+  }
+
+  return (
+    <div className="relative mx-auto w-full max-w-xs sm:max-w-sm">
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/how-it-works-poster.jpg"
+        className="w-full aspect-[9/16] object-cover rounded-3xl shadow-md"
+      >
+        <source src="/videos/how-it-works.mp4" type="video/mp4" />
+      </video>
+      <button
+        type="button"
+        onClick={toggleMute}
+        aria-label={muted ? t("how.video.unmute") : t("how.video.mute")}
+        className="absolute bottom-4 right-4 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm border border-border flex items-center justify-center shadow-md hover:bg-background transition-colors"
+      >
+        {muted ? (
+          <VolumeX className="h-5 w-5 text-foreground" />
+        ) : (
+          <Volume2 className="h-5 w-5 text-foreground" />
+        )}
+      </button>
     </div>
   );
 }
@@ -408,16 +456,9 @@ function Index() {
             ))}
           </div>
           <Reveal delay={200}>
-            <video
-              controls
-              playsInline
-              muted
-              loop
-              preload="metadata"
-              className="w-full max-w-3xl mx-auto mt-16 rounded-3xl shadow-md"
-            >
-              <source src="/videos/how-it-works.mp4" type="video/mp4" />
-            </video>
+            <div className="mt-16">
+              <HowItWorksVideo />
+            </div>
           </Reveal>
         </div>
       </section>
