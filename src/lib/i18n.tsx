@@ -52,6 +52,8 @@ const fr: Dict = {
   "how.step2.text": "Plongez le pinceau dans le collier silicone et lancez la rotation.",
   "how.step3.title": "Séchez",
   "how.step3.text": "Retirez de l'eau et faites tourner pour un séchage instantané.",
+  "how.video.unmute": "Activer le son",
+  "how.video.mute": "Couper le son",
 
   "features.adapt.title": "S'adapte à tous vos pinceaux",
   "features.adapt.text":
@@ -170,6 +172,8 @@ const en: Dict = {
   "how.step2.text": "Slip the brush into the silicone collar and start the rotation.",
   "how.step3.title": "Dry",
   "how.step3.text": "Lift out of the water and spin again for instant drying.",
+  "how.video.unmute": "Unmute",
+  "how.video.mute": "Mute",
 
   "features.adapt.title": "Fits every brush you own",
   "features.adapt.text":
