@@ -31,11 +31,11 @@ function ConnexionPage() {
       callbackURL: "/compte",
     });
     if (error) {
+      // DEBUG TEMPORAIRE — affiche le détail réel de l'erreur pour diagnostic.
+      // À retirer une fois la cause identifiée.
       setStatus({
         kind: "error",
-        message: fr
-          ? "L'envoi du lien a échoué. Vérifie ton adresse et réessaie."
-          : "Sending the link failed. Check your email and try again.",
+        message: `DEBUG — status: ${error?.status ?? "?"} | ${error?.statusText ?? ""} | ${error?.message ?? error?.code ?? JSON.stringify(error)}`,
       });
       return;
     }
