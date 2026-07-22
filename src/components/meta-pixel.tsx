@@ -44,6 +44,10 @@ export function MetaPixel({ pixelId }: { pixelId: string }) {
     })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
     /* eslint-enable */
 
+    // Désactive autoConfig AVANT l'init : sinon Meta instrumente les clics et
+    // requêtes de la page, ce qui perturbe la requête d'auth de Better Auth
+    // (échec "403 Invalid origin" au login après consentement).
+    window.fbq?.("set", "autoConfig", false, pixelId);
     window.fbq?.("init", pixelId);
     window.fbq?.("track", "PageView");
   }, [status, pixelId]);
