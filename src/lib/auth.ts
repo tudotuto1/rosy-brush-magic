@@ -26,6 +26,11 @@ export function createAuth() {
     baseURL: appEnv.PUBLIC_APP_URL,
     secret: appEnv.BETTER_AUTH_SECRET,
     trustedOrigins,
+    // Better Auth tourne derrière le proxy Cloudflare. Depuis la 1.4.3, il ne
+    // fait plus confiance par défaut aux en-têtes X-Forwarded-* et infère alors
+    // une mauvaise origine quand l'en-tête `Origin` est absent (ce que le pixel
+    // Meta provoque) → 403 "Invalid origin". On réactive la confiance au proxy.
+    advanced: { trustedProxyHeaders: true },
     plugins: [
       magicLink({
         sendMagicLink: async ({ email, url }) => {
